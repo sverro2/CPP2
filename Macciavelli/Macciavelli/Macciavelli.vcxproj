@@ -110,15 +110,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\Users\ron\Desktop\Macciavelli voorbeeldserver\machiavelli_nonblocking\machiavelli\throw.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Server.cpp" />
     <ClCompile Include="Socket.cpp" />
-    <ClCompile Include="throw.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CircularBuffer.h" />
     <ClInclude Include="ClientCommand.h" />
     <ClInclude Include="ClientInfo.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Server.h" />
     <ClInclude Include="Socket.h" />
     <ClInclude Include="Sync_queue.h" />
     <ClInclude Include="throw.h" />
