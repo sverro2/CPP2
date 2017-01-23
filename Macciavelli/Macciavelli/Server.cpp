@@ -76,7 +76,7 @@ int Server::requestOptionByIndex(string player_name, vector<string> options, str
 		}
 	}
 	catch (...) {
-		sendMessage(player_name,"Invalid input given!");
+		sendMessage(player_name, "Invalid input given!");
 		return this->requestOptionByIndex(player_name, options, question);
 	}
 }
@@ -124,8 +124,6 @@ void Server::startListening(int port)
 	for (auto &t : all_threads) {
 		t.join();
 	}
-
-	_CrtDumpMemoryLeaks();
 }
 
 void Server::consume_command() // runs in its own thread
@@ -139,15 +137,15 @@ void Server::consume_command() // runs in its own thread
 				try {
 					auto com = command.get_cmd();
 						
-						if (com == "Test")
-						{
-							auto result = requestString("HulkHogan", "Dit is een testvraag?");
-							sendMessage(player.get_name(), result);
-						}
-						else
-						{
-
-						}
+						//if (com == "Test")
+						//{
+						//	auto result = requestString("HulkHogan", "Dit is een testvraag?");
+						//	sendMessage(player.get_name(), result);
+						//}
+						//else
+						//{
+						//
+						//}
 
 
 					client << player.get_name() << ", you wrote: '" << command.get_cmd() << "', but I'll ignore that for now.\r\n" << _prompt;
