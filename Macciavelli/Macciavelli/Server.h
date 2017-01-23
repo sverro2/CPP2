@@ -1,5 +1,4 @@
 #pragma once
-
 #include <thread>
 #include <iostream>
 #include <exception>
@@ -8,14 +7,13 @@
 #include <chrono>
 #include <map>
 
-using namespace std;
-
 #include "Socket.h"
 #include "Sync_queue.h"
 #include "ClientCommand.h"
 #include "Player.h"
 #include "ClientInfo.h"
-#include "Server.h"
+
+using namespace std;
 
 class Server
 {

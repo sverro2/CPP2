@@ -47,46 +47,46 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Socket.cpp">
-      <Filter>Server\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Server\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Server.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="throw.cpp">
+    <ClCompile Include="Server.cpp">
       <Filter>Server\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Socket.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="throw.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ClientCommand.h">
-      <Filter>Server\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ClientInfo.h">
-      <Filter>Server\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Server\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Socket.h">
-      <Filter>Server\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sync_queue.h">
-      <Filter>Server\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="throw.h">
+    <ClInclude Include="Server.h">
       <Filter>Server\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CircularBuffer.h">
-      <Filter>Server\Header Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Server.h">
-      <Filter>Server\Header Files</Filter>
+    <ClInclude Include="ClientCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sync_queue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="throw.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
