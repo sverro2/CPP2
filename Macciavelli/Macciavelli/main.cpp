@@ -9,9 +9,13 @@
 
 #include "Server.h"
 
-int main(int argc, const char * argv[])
-{
+void RunServer() {
 	Server server;
-
 	server.startListening(1080);
+}
+
+int main(int argc, const char * argv[])
+{	
+	RunServer();
+	_CrtDumpMemoryLeaks();
 }

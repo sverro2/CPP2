@@ -53,14 +53,14 @@
     <ClCompile Include="Player.cpp">
       <Filter>Server\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\Users\ron\Desktop\Macciavelli voorbeeldserver\machiavelli_nonblocking\machiavelli\throw.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Server.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="throw.cpp">
+      <Filter>Server\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -86,7 +86,7 @@
       <Filter>Server\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Server.h">
-      <Filter>Header Files</Filter>
+      <Filter>Server\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
