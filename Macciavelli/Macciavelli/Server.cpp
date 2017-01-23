@@ -4,7 +4,7 @@ Server::Server()
 {
 }
 
-string Server::requestString(string player_name, string question)
+const string Server::requestString(const string player_name, const string question)
 {
 	_clients[player_name]->get_socket().write(question);
 	string result;
@@ -14,7 +14,7 @@ string Server::requestString(string player_name, string question)
 	return result;
 }
 
-int Server::requestInt(string player_name, string question)
+const int Server::requestInt(const string player_name, const string question)
 {
 	sendMessage(player_name, question);
 	try {
@@ -30,7 +30,7 @@ int Server::requestInt(string player_name, string question)
 	}
 }
 
-int Server::requestIntWithinRange(string player_name, string question, int min, int max)
+const int Server::requestIntWithinRange(const string player_name, const string question, const int min, const int max)
 {
 	sendMessage(player_name, question);
 	try {
@@ -53,7 +53,7 @@ int Server::requestIntWithinRange(string player_name, string question, int min, 
 	}
 }
 
-int Server::requestOptionByIndex(string player_name, vector<string> options, string question)
+const int Server::requestOptionByIndex(const string player_name, const vector<string> options, const string question)
 {
 	sendMessage(player_name, question);
 
@@ -81,12 +81,12 @@ int Server::requestOptionByIndex(string player_name, vector<string> options, str
 	}
 }
 
-void Server::sendMessage(string player_name, string message)
+void Server::sendMessage(const string player_name, const string message)
 {
 	_clients[player_name]->get_socket().write(message);
 }
 
-void Server::sendMessage(vector<string> player_names, string message)
+void Server::sendMessage(const vector<string> player_names, const string message)
 {
 	for (int i = 0; i < player_names.size(); i++)
 	{
@@ -94,7 +94,7 @@ void Server::sendMessage(vector<string> player_names, string message)
 	}
 }
 
-void Server::startListening(int port)
+void Server::startListening(const int port)
 {
 	vector<thread> all_threads;
 	// start command consumer thread
