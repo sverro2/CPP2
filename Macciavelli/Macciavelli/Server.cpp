@@ -98,6 +98,7 @@ void Server::startListening(int port)
 {
 	vector<thread> all_threads;
 	// start command consumer thread
+
 	all_threads.emplace_back([this] { consume_command(); });
 
 	// create a server socket
@@ -137,15 +138,15 @@ void Server::consume_command() // runs in its own thread
 				try {
 					auto com = command.get_cmd();
 						
-						//if (com == "Test")
-						//{
-						//	auto result = requestString("HulkHogan", "Dit is een testvraag?");
-						//	sendMessage(player.get_name(), result);
-						//}
-						//else
-						//{
-						//
-						//}
+						if (com == "Test")
+						{
+							auto result = requestString("HulkHogan", "Dit is een testvraag?");
+							sendMessage(player.get_name(), result);
+						}
+						else
+						{
+						
+						}
 
 
 					client << player.get_name() << ", you wrote: '" << command.get_cmd() << "', but I'll ignore that for now.\r\n" << _prompt;
@@ -169,13 +170,14 @@ void Server::consume_command() // runs in its own thread
 		cerr << "consume_command crashed\n";
 	}
 }
-
+//Hetzelfde
 void Server::handle_client(Socket client) // this function runs in a separate thread
 {
 	try {
 		auto client_info = init_client_session(move(client));
 		auto &socket = client_info->get_socket();
 		auto &player = client_info->get_player();
+
 		socket << "Welcome, " << player.get_name() << ", have fun playing our game!\r\n" << _prompt;
 
 		// Add client to the list of connected clients using the name as the identifier
@@ -218,6 +220,7 @@ void Server::handle_client(Socket client) // this function runs in a separate th
 	}
 }
 
+//Same
 shared_ptr<ClientInfo> Server::init_client_session(Socket client) {
 	client.write("Welcome to Server 1.0! To quit, type 'quit'.\r\n");
 	client.write("What's your name?\r\n");

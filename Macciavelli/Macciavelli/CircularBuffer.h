@@ -21,7 +21,6 @@ public:
     int size() noexcept { return used; }
 
     void clear() noexcept { 
-        buffer.clear(); 
         head = tail = used = 0; 
     }
 
