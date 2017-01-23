@@ -21,16 +21,16 @@ public:
 	Server();
 
 	//Request result value from client.
-	string requestString(string player_name, string question);
-	int requestInt(string player_name, string question);
-	int requestIntWithinRange(string player_name, string question, int min, int max);
-	int requestOptionByIndex(string player_name, vector<string> options, string question);
+	const string requestString(const string player_name, const string question); 
+	const int requestInt(const string player_name, const string question);
+	const int requestIntWithinRange(const string player_name, string question, int min, int max);
+	const int requestOptionByIndex(const string player_name, const vector<string> options, const string question);
 
 	//Notifications to client.
-	void sendMessage(string player_name, string message);
-	void sendMessage(vector<string> player_names, string message);
+	void sendMessage(const string player_name, const string message);
+	void sendMessage(const vector<string> player_names, const string message);
 
-	void startListening(int port);
+	void startListening(const int port);
 
 private:
 	bool _running = true;
