@@ -102,9 +102,8 @@ void Server::startListening(int port)
 	all_threads.emplace_back([this] { consume_command(); });
 
 	// create a server socket
-	ServerSocket server{ port };
-
 	try {
+		ServerSocket server{ port };
 		cerr << "server listening" << '\n';
 		while (_running) {
 			// wait for connection from client; will create new socket
