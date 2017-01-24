@@ -1,7 +1,10 @@
 #include "GameInitState.h"
+#include "GameContext.h"
+#include "CardReader.h"
 
 void GameInitState::EnterState()
 {
+	
 	std::vector<std::string> options;
 	options.push_back("young");
 	options.push_back("old");

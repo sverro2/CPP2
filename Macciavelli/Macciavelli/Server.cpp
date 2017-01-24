@@ -244,8 +244,18 @@ shared_ptr<ClientInfo> Server::init_client_session(Socket client) {
 	string name;
 	bool done{ false };
 	while (!done) {
-		done = client.readline([&name](std::string input) {
+			client.readline([&](std::string input) {
 			name = input;
+			auto found_item{ _clients.find(input) };
+
+			if (found_item == _clients.end()) {
+				done = true;
+			}
+			else {
+				client.write("User already logged in... What's YOUR name?\r\n");
+				client.write(_prompt);
+			}
+			
 		});
 		this_thread::sleep_for(chrono::milliseconds(100));
 	}

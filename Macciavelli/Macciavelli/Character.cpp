@@ -10,6 +10,11 @@ Character::Character(size_t index, CharacterType type) :
 {
 }
 
+const bool Character::operator==(const Character & other) const
+{
+	return _index == other._index;
+}
+
 const CharacterType Character::CharacterStringToEnum(const char * const name_string)
 {
 	if (strcmp(name_string, "Moordenaar") == 0) {

@@ -1,14 +1,17 @@
 #include "Building.h"
 #include <string>
-Building::Building()
-{
-}
+Building::Building() {}
 
 Building::Building(const std::string name, const unsigned short cost, const Color color) : 
 	_name{name}, 
 	_cost{cost}, 
 	_description{_description}
 {
+}
+
+const bool Building::operator==(const Building & other) const
+{
+	return _name == other._name;
 }
 
 const std::string Building::GetName() const
