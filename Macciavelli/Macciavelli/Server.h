@@ -33,6 +33,9 @@ public:
 
 	void startListening(const int port);
 
+	//getters
+	const map<string, shared_ptr<ClientInfo>>& GetClients() const;
+
 private:
 	bool _running = true;
 	bool _game_started = false;
@@ -44,7 +47,7 @@ private:
 	void handle_client(Socket client);
 	shared_ptr<ClientInfo> init_client_session(Socket client);
 
-	const std::string ReadPlayerInput(const std::string& const player);
+	const std::string ReadPlayerInput(const std::string& player);
 
 	std::string _current_player = "";
 };

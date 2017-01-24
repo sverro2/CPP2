@@ -20,6 +20,7 @@ public:
         std::lock_guard<std::mutex> lck {mtx};
         q.push_back(val);
         cond.notify_one();
+		_queue_size++;
     }
 
     T get()
@@ -28,13 +29,20 @@ public:
         cond.wait(lck, [this]{ return !q.empty(); });
         T val {q.front()};
         q.pop_front();
+		_queue_size--;
         return val;
     }
+
+	const size_t GetSize() const
+	{
+		return _queue_size;
+	}
 
 private:
     std::mutex mtx;
     std::condition_variable cond;
     std::list<T> q;
+	size_t _queue_size = 0;
 };
 
 #endif /* defined(__Sync_queue__) */

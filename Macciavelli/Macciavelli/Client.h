@@ -6,8 +6,8 @@
 //  Copyright © 2015 Avans Hogeschool, 's-Hertogenbosch. All rights reserved.
 //
 
-#ifndef Player_hpp
-#define Player_hpp
+#ifndef Client_hpp
+#define Client_hpp
 
 #include <string>
 
@@ -23,4 +23,4 @@ private:
     std::string name;
 };
 
-#endif /* Player_hpp */
+#endif Client_hpp

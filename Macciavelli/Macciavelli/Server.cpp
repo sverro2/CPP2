@@ -1,5 +1,5 @@
 #include "Server.h"
-#include "GameController.h"
+#include "GameContext.h"
 #include "EndGame.h"
 
 Server::Server()
@@ -28,7 +28,7 @@ const int Server::RequestInt(const string player_name, const string question)
 
 const int Server::RequestIntWithinRange(const string player_name, const string question, const int min, const int max)
 {
-	std::string compiled_question{ question + "(" + std::to_string(min) + " - " + std::to_string(max) + ")" };
+	std::string compiled_question{ question + " (" + std::to_string(min) + " - " + std::to_string(max) + ")" };
 	SendMessage(player_name, compiled_question);
 	try {
 		int result{ stoi(ReadPlayerInput(player_name)) };
@@ -120,7 +120,7 @@ void Server::startListening(const int port)
 
 		//initialize game
 		if (_running) {
-			GameController game_controller(*this);
+			GameContext game_controller(*this);
 
 			//play game
 			while (_running) {
@@ -148,6 +148,11 @@ void Server::startListening(const int port)
 	for (auto &t : all_threads) {
 		t.join();
 	}
+}
+
+const map<string, shared_ptr<ClientInfo>>& Server::GetClients() const
+{
+	return _clients;
 }
 
 void Server::handle_client(Socket client) // this function runs in a separate thread
@@ -178,7 +183,7 @@ void Server::handle_client(Socket client) // this function runs in a separate th
 					}
 
 					//When the current player has inserted some input
-					if (player.get_name() == _current_player) {
+					if (player.get_name() == _current_player && _queue.GetSize() == 0) {
 						ClientCommand command{ cmd, client_info, player };
 						_queue.put(command);
 					}
@@ -223,7 +228,7 @@ shared_ptr<ClientInfo> Server::init_client_session(Socket client) {
 	return make_shared<ClientInfo>(move(client), Client{ name });
 }
 
-const std::string Server::ReadPlayerInput(const std::string & const player)
+const std::string Server::ReadPlayerInput(const std::string& player)
 {
 	//create prompt for user
 	_clients[player]->get_socket().write(_prompt);
@@ -232,6 +237,9 @@ const std::string Server::ReadPlayerInput(const std::string & const player)
 	_current_player = player;
 
 	ClientCommand command{ _queue.get() };
+
+	//after the command has been read, make sure other commands of the user are ignored
+	_current_player = "";
 
 	if (!_running) {
 		throw EndGame();

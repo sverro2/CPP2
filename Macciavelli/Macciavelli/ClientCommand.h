@@ -24,7 +24,7 @@ public:
 
     std::string get_cmd() const { return cmd; }
     std::weak_ptr<ClientInfo> get_client_info() const { return info; }
-	Client& const GetClient();
+	const Client& GetClient();
 
 private:
     std::string cmd;

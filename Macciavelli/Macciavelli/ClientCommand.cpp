@@ -1,6 +1,6 @@
 #include "ClientCommand.h"
 
-Client& const ClientCommand::GetClient() 
+const Client& ClientCommand::GetClient() 
 {
 	return _client;
 }
