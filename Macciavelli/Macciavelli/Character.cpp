@@ -43,6 +43,16 @@ const CharacterType Character::CharacterStringToEnum(const char * const name_str
 	}
 }
 
+const size_t Character::GetIndex() const
+{
+	return _index;
+}
+
+const CharacterType Character::GetCharacterType() const
+{
+	return _type;
+}
+
 std::istream & operator >> (std::istream & is, Character & character)
 {
 	std::string index;

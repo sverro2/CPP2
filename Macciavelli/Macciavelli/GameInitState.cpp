@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "GameInitState.h"
 #include "GameContext.h"
 #include "CardReader.h"
@@ -14,13 +15,17 @@ void GameInitState::EnterState()
 		throw EndGame();
 	}
 
+	//initialize character deck
+	std::sort(characters.begin(), characters.end(), [](const Character& a, const Character& b) {
+		return a.GetIndex() < b.GetIndex();
+	});
+
 	//initialize players
 	const auto clients{ _server.GetPlayers() };
 
 	int oldest{ 0 };
 	std::shared_ptr<Player> oldest_player;
 
-	//initialize players
 	for (const auto& client : clients) {
 		const int age{ _server.RequestIntWithinRange(client, "What is your age?", 10, 100) };
 		const auto created_player{ std::make_shared<Player>(client, age) };
@@ -38,7 +43,10 @@ void GameInitState::EnterState()
 
 	auto king_name{ king->GetKing()->GetName() };
 	_server.SendMessage(king_name, "You are the oldest player. Congratulations, you are king.");
-	_server.SendMessageToAllBut(king_name, "The game has begun. " + king_name + " has been selected as your king.");
+	_server.SendMessageToAllBut(king_name, "The game has begun. " + king_name + " has been selected as your king.");	
+
+	//set character deck (right order/available characters)
+	_context.SetCharacterDeck(std::move(characters));
 }
 
 void GameInitState::LeaveState()
