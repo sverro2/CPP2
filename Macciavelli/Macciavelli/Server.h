@@ -37,6 +37,7 @@ public:
 
 	//getters
 	const map<string, shared_ptr<ClientInfo>>& GetClients() const;
+	virtual const std::vector<std::string> GetPlayers() override;
 
 private:
 	bool _running = true;
@@ -50,7 +51,6 @@ private:
 	shared_ptr<ClientInfo> init_client_session(Socket client);
 
 	const std::string ReadPlayerInput(const std::string& player);
-
 	std::string _current_player = "";
 };
 

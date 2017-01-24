@@ -17,6 +17,10 @@ public:
 	virtual void SendMessage(const vector<string> player_names, const string message) = 0;
 	virtual void SendMessageToAll(const string message) = 0;
 	virtual void SendMessageToAllBut(const string player_name, const string message) = 0;
+
+	//Get player names
+	virtual const std::vector<std::string> GetPlayers() = 0;
+
 	virtual ~IServer() {};
 };
 

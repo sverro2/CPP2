@@ -15,7 +15,6 @@ class GameContext
 {
 public:
 	GameContext(IServer& server);
-	const std::vector<Player> GetPlayers() const;
 	void SwitchToState(std::unique_ptr<GameState>&& _state);
 	void ResetAll();
 	void ResetRemainingCharacterCards();
@@ -23,17 +22,24 @@ public:
 	void AddCardToGarbagePile(Building building);
 	void AssignCharacterToPlayer(const CharacterType character, const std::shared_ptr<Player> player);
 	void ClearPlayerCharacters();
+	void SetCurrentPlayer(const std::shared_ptr<Player>& player);
+	void AddPlayer(const std::shared_ptr<Player>& player);
+	void SetCharacterDeck(std::vector<Character> character_deck);
 
 	//getters
+	const std::vector<std::shared_ptr<Player>>& GetPlayers() const;
 	const Building TakeBuildingCard();
 	const std::vector<Character>& LookAtRemainingCharacterCards();
 	const bool TakeCharacterCard(Character character);
-
+	const bool HasBuildingCards();
+	const std::shared_ptr<Player>& GetPlayerAtRightHandOfCurrent() const;
+	const std::shared_ptr<Player>& GetCurrentPlayer() const;
 	const std::default_random_engine& GetRandomEngine() const;
+	std::unique_ptr<King>& GetKingReference();
 private:
 	IServer& _server;
-	std::vector<Player> _players;
-	std::string _current_player;
+	std::vector<shared_ptr<Player>> _players;
+	std::shared_ptr<Player> _current_player;
 
 	//Character
 	const std::vector<Character> _character_deck;

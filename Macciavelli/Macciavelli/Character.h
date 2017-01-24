@@ -29,6 +29,8 @@ public:
 	friend std::ostream &operator << (std::ostream &is, const Character &character);
 
 	//getters
+	const size_t GetIndex() const;
+	const CharacterType GetCharacterType() const;
 private:
 	size_t _index;
 	CharacterType _type;
