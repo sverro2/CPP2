@@ -5,6 +5,17 @@
 
 GameContext::GameContext(IServer& server) : _server{ server }
 {
+	//Player roles in good order.
+	_player_roles.insert(std::pair<CharacterType, std::shared_ptr<Player>>(MURDERER, nullptr));
+	_player_roles.insert(std::pair<CharacterType, std::shared_ptr<Player>>(THIEF, nullptr));
+	_player_roles.insert(std::pair<CharacterType, std::shared_ptr<Player>>(MAGICIAN, nullptr));
+	_player_roles.insert(std::pair<CharacterType, std::shared_ptr<Player>>(KING, nullptr));
+	_player_roles.insert(std::pair<CharacterType, std::shared_ptr<Player>>(PRIEST, nullptr));
+	_player_roles.insert(std::pair<CharacterType, std::shared_ptr<Player>>(MERCHANT, nullptr));
+	_player_roles.insert(std::pair<CharacterType, std::shared_ptr<Player>>(ARCHITECT, nullptr));
+	_player_roles.insert(std::pair<CharacterType, std::shared_ptr<Player>>(CONDONTIERE, nullptr));
+
+	//Initialises game.
 	InitGame();
 }
 
@@ -78,6 +89,23 @@ void GameContext::AddCardToGarbagePile(Building building)
 	_building_deck.push(building);
 }
 
+void GameContext::AssignCharacterToPlayer(const CharacterType character, const std::shared_ptr<Player> player)
+{
+	_player_roles[character] = player;
+}
+
+void GameContext::ClearPlayerCharacters()
+{
+	_player_roles[MURDERER] = nullptr;
+	_player_roles[THIEF] = nullptr;
+	_player_roles[MAGICIAN] = nullptr;
+	_player_roles[KING] = nullptr;
+	_player_roles[PRIEST] = nullptr;
+	_player_roles[MERCHANT] = nullptr;
+	_player_roles[ARCHITECT] = nullptr;
+	_player_roles[CONDONTIERE] = nullptr;
+}
+
 const Building GameContext::TakeBuildingCard()
 {
 	Building building{ _building_deck.top() };
@@ -101,11 +129,6 @@ const bool GameContext::TakeCharacterCard(Character character)
 		_characters_remaining.erase(character_iterator);
 		return true;
 	}
-}
-
-const bool GameContext::HasBuildingCards()
-{
-	return !_building_deck.empty();
 }
 
 const std::default_random_engine & GameContext::GetRandomEngine() const

@@ -1,4 +1,5 @@
 #pragma once
+#include <map>
 #include <vector>
 #include <memory>
 #include <stack>
@@ -20,12 +21,13 @@ public:
 	void ResetRemainingCharacterCards();
 	void ShuffleBuildingCards(std::vector<Building>&& all_remaining_buildings = std::vector<Building>());
 	void AddCardToGarbagePile(Building building);
+	void AssignCharacterToPlayer(const CharacterType character, const std::shared_ptr<Player> player);
+	void ClearPlayerCharacters();
 
 	//getters
 	const Building TakeBuildingCard();
 	const std::vector<Character>& LookAtRemainingCharacterCards();
 	const bool TakeCharacterCard(Character character);
-	const bool HasBuildingCards();
 
 	const std::default_random_engine& GetRandomEngine() const;
 private:
@@ -33,11 +35,14 @@ private:
 	std::vector<Player> _players;
 	std::string _current_player;
 
-	//character
-	std::vector<Character> _character_deck;
+	//Character
+	const std::vector<Character> _character_deck;
 	std::vector<Character> _characters_remaining;
 
-	//buildings
+	//Player roles
+	std::map<CharacterType, std::shared_ptr<Player>> _player_roles;
+
+	//Buildings
 	std::stack<Building> _building_deck;
 	std::stack<Building> _garbage_pile;
 
