@@ -67,12 +67,17 @@
     <ClCompile Include="Character.cpp">
       <Filter>Models\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BuildingArea.cpp" />
     <ClCompile Include="GameState.cpp">
       <Filter>Controllers\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GameScoreState.cpp">
       <Filter>Controllers\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameCharacterState.cpp">
+      <Filter>Controllers\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BuildingArea.cpp">
+      <Filter>Models\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -130,12 +135,17 @@
     <ClInclude Include="CardReader.h">
       <Filter>Models\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BuildingArea.h" />
     <ClInclude Include="GameState.h">
       <Filter>Controllers\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameScoreState.h">
       <Filter>Controllers\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameCharacterState.h">
+      <Filter>Controllers\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BuildingArea.h">
+      <Filter>Models\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

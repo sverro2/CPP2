@@ -102,3 +102,15 @@ void Player::ResetCharacters()
 {
 	_characters.clear();
 }
+
+const bool Player::MutateMoney(const unsigned short money_balance)
+{
+	auto new_balance{ _money - money_balance };
+	if (new_balance >= 0) {
+		_money = new_balance;
+		return true;
+	}
+	else {
+		return false;
+	}
+}
