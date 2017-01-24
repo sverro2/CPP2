@@ -118,6 +118,7 @@
     <ClCompile Include="EndGame.cpp" />
     <ClCompile Include="GameContext.cpp" />
     <ClCompile Include="GameInitState.cpp" />
+    <ClCompile Include="GameScoreState.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="King.cpp" />
     <ClCompile Include="main.cpp" />
@@ -139,6 +140,7 @@
     <ClInclude Include="EndGame.h" />
     <ClInclude Include="GameContext.h" />
     <ClInclude Include="GameInitState.h" />
+    <ClInclude Include="GameScoreState.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="IServer.h" />
     <ClInclude Include="King.h" />

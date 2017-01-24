@@ -10,6 +10,7 @@ class GameContext
 public:
 	GameContext(IServer& server);
 	void SwitchToState(std::unique_ptr<GameState> _state);
+	const std::vector<Player> GetPlayers() const;
 private:
 	IServer& _server;
 	std::vector<Player> _players;

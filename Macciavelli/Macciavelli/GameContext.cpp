@@ -21,6 +21,11 @@ void GameContext::SwitchToState(std::unique_ptr<GameState> state)
 	_current_gamestate->EnterState();
 }
 
+const std::vector<Player> GameContext::GetPlayers() const
+{
+	return _players;
+}
+
 void GameContext::InitGame()
 {
 	SwitchToState(std::move(std::make_unique<GameInitState>(*this, _server)));

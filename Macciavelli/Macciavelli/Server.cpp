@@ -94,6 +94,30 @@ void Server::SendMessage(const vector<string> player_names, const string message
 	}
 }
 
+void Server::SendMessageToAll(const string message)
+{
+	auto clients = GetClients();
+
+	for (auto client = clients.begin(); client != clients.end(); ++client)
+	{
+		SendMessage(client->first, message);
+	}
+}
+
+void Server::SendMessageToAllBut(const string player_name, const string message)
+{
+	auto clients = GetClients();
+
+	for (auto client = clients.begin(); client != clients.end(); ++client)
+	{
+		std::string name = client->first;
+		if (name != player_name) 
+		{
+			SendMessage(name, message);
+		}
+	}
+}
+
 void Server::startListening(const int port)
 {
 	vector<thread> all_threads;

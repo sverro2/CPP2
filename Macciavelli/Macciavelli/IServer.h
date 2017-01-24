@@ -15,6 +15,8 @@ public:
 	//Notifications to client.
 	virtual void SendMessage(const string player_name, const string message) = 0;
 	virtual void SendMessage(const vector<string> player_names, const string message) = 0;
+	virtual void SendMessageToAll(const string message) = 0;
+	virtual void SendMessageToAllBut(const string player_name, const string message) = 0;
 	virtual ~IServer() {};
 };
 
