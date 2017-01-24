@@ -11,6 +11,7 @@ public:
 	//streaming
 	friend std::istream &operator >> (std::istream &is, Building &r);
 	friend std::ostream &operator << (std::ostream &is, const Building &r);
+	const bool operator==(const Building& other) const;
 
 	//getters
 	const std::string GetName() const;

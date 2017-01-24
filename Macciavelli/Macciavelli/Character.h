@@ -19,6 +19,7 @@ class Character
 public:
 	Character();
 	Character(size_t index, CharacterType type);
+	const bool operator==(const Character& character) const;
 
 	static const CharacterType CharacterStringToEnum(const char* const name_string);
 
