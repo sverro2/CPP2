@@ -20,6 +20,7 @@ public:
 	void ShuffleBuildingCards(std::vector<Building>&& all_remaining_buildings = std::vector<Building>());
 	void AddCardToGarbagePile(Building building);
 	void SetCurrentPlayer(const std::shared_ptr<Player>& player);
+	void AddPlayer(const std::shared_ptr<Player>& player);
 
 	//getters
 	const std::vector<std::shared_ptr<Player>>& GetPlayers() const;
@@ -29,8 +30,8 @@ public:
 	const bool HasBuildingCards();
 	const std::shared_ptr<Player>& GetPlayerAtRightHandOfCurrent() const;
 	const std::shared_ptr<Player>& GetCurrentPlayer() const;
-
 	const std::default_random_engine& GetRandomEngine() const;
+	std::unique_ptr<King>& GetKingReference();
 private:
 	IServer& _server;
 	std::vector<shared_ptr<Player>> _players;

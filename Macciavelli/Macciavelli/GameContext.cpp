@@ -127,6 +127,11 @@ void GameContext::SetCurrentPlayer(const std::shared_ptr<Player>& player)
 	_current_player = player;
 }
 
+void GameContext::AddPlayer(const std::shared_ptr<Player>& player)
+{
+	_players.push_back(player);
+}
+
 const std::shared_ptr<Player>& GameContext::GetCurrentPlayer() const
 {
 	return _current_player;
@@ -135,6 +140,11 @@ const std::shared_ptr<Player>& GameContext::GetCurrentPlayer() const
 const std::default_random_engine & GameContext::GetRandomEngine() const
 {
 	return _random_engine;
+}
+
+std::unique_ptr<King>& GameContext::GetKingReference()
+{
+	return _king;
 }
 
 void GameContext::InitGame()

@@ -283,3 +283,14 @@ const std::string Server::ReadPlayerInput(const std::string& player)
 	std::string input{ command.get_cmd() };
 	return std::move(input);
 }
+
+const std::vector<std::string> Server::GetPlayers()
+{
+	std::vector<std::string> player_strings;
+	
+	for (const auto& client : _clients) {
+		player_strings.push_back(client.first);
+	}
+
+	return std::move(player_strings);
+}
