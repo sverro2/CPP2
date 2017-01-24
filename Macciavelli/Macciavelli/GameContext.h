@@ -14,7 +14,7 @@ class GameContext
 {
 public:
 	GameContext(IServer& server);
-
+	const std::vector<Player> GetPlayers() const;
 	void SwitchToState(std::unique_ptr<GameState>&& _state);
 	void ResetAll();
 	void ResetRemainingCharacterCards();

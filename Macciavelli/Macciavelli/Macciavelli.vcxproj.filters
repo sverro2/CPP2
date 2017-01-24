@@ -71,6 +71,9 @@
     <ClCompile Include="GameState.cpp">
       <Filter>Controllers\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GameScoreState.cpp">
+      <Filter>Controllers\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Server.h">
@@ -129,6 +132,9 @@
     </ClInclude>
     <ClInclude Include="BuildingArea.h" />
     <ClInclude Include="GameState.h">
+      <Filter>Controllers\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScoreState.h">
       <Filter>Controllers\Header Files</Filter>
     </ClInclude>
   </ItemGroup>

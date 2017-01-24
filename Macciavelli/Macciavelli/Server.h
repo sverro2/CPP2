@@ -30,6 +30,8 @@ public:
 	//Notifications to client.
 	void SendMessage(const string player_name, const string message) override;
 	void SendMessage(const vector<string> player_names, const string message) override;
+	void SendMessageToAll(const string message) override;
+	void SendMessageToAllBut(const string player_name, const string message) override;
 
 	void startListening(const int port);
 

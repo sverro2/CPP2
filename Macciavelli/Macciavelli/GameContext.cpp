@@ -22,6 +22,11 @@ void GameContext::SwitchToState(std::unique_ptr<GameState>&& state)
 	_current_gamestate->EnterState();
 }
 
+const std::vector<Player> GameContext::GetPlayers() const
+{
+	return _players;
+}
+
 void GameContext::ResetAll()
 {
 	_current_player = "";
@@ -107,8 +112,6 @@ const std::default_random_engine & GameContext::GetRandomEngine() const
 {
 	return _random_engine;
 }
-
-
 
 void GameContext::InitGame()
 {
