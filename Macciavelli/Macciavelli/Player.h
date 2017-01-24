@@ -28,10 +28,13 @@ public:
 	//Resets all characters.
 	void ResetCharacters();
 
+	//Money
+	const bool MutateMoney(const unsigned short money_balance);
 private:
 	const std::string _name;
 	const unsigned short _age;
 	bool _first_to_eight_buildings;
+	unsigned short _money = 2;
 
 	//The playable roles.
 	std::vector<std::shared_ptr<Character>> _characters;

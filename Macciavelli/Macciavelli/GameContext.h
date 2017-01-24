@@ -24,7 +24,7 @@ public:
 	void ClearPlayerCharacters();
 	void SetCurrentPlayer(const std::shared_ptr<Player>& player);
 	void AddPlayer(const std::shared_ptr<Player>& player);
-	void SetCharacterDeck(std::vector<Character> character_deck);
+	void SetCharacterDeck(std::vector<Character>&& character_deck);
 
 	//getters
 	const std::vector<std::shared_ptr<Player>>& GetPlayers() const;

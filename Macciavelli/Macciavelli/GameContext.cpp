@@ -160,7 +160,7 @@ void GameContext::AddPlayer(const std::shared_ptr<Player>& player)
 	_players.push_back(player);
 }
 
-void GameContext::SetCharacterDeck(std::vector<Character> character_deck)
+void GameContext::SetCharacterDeck(std::vector<Character>&& character_deck)
 {
 	_character_deck = character_deck;
 }
