@@ -1,11 +1,27 @@
 #include "GameContext.h"
 #include "IServer.h"
+#include "GameInitState.h"
 
 GameContext::GameContext(IServer& server) : _server{ server }
 {
-	std::vector<std::string> options;
-	options.push_back("young");
-	options.push_back("old");
-	int item{ _server.RequestIntWithinRange("sven", "How old are you?", 0, 10)};
-	_server.SendMessage("sven", "well you asked me: " + std::to_string(item));
+	InitGame();
+}
+
+void GameContext::SwitchToState(std::unique_ptr<GameState> state)
+{
+	//Notify old state to start the "LeaveState"
+	if (_current_gamestate != nullptr) {
+		_current_gamestate->LeaveState();
+	}
+
+	//Set new state
+	_current_gamestate = std::move(state);
+
+	//Start new state
+	_current_gamestate->EnterState();
+}
+
+void GameContext::InitGame()
+{
+	SwitchToState(std::move(std::make_unique<GameInitState>(*this, _server)));
 }

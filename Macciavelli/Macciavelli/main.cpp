@@ -4,6 +4,7 @@
 //
 //  Created by Bob Polis on 16/09/14.
 //  Revised by Jeroen de Haas on 22/11/2016
+//	Extended by Ron van Asseldonk and Sven Brettschneider on 16/01/25
 //  Copyright (c) 2014 Avans Hogeschool, 's-Hertogenbosch. All rights reserved.
 //
 

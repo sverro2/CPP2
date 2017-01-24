@@ -15,3 +15,18 @@ const unsigned short Player::GetAge() const
 {
 	return _age;
 }
+
+const std::vector<std::shared_ptr<Character>>& Player::GetCharacters()
+{
+	return _characters;
+}
+
+void Player::AddCharacter(const std::shared_ptr<Character>& character)
+{
+	_characters.push_back(character);
+}
+
+void Player::ResetCharacters()
+{
+	_characters.clear();
+}

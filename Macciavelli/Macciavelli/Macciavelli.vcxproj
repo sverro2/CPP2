@@ -111,12 +111,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Building.cpp" />
+    <ClCompile Include="BuildingArea.cpp" />
     <ClCompile Include="CardReader.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="ClientCommand.cpp" />
     <ClCompile Include="EndGame.cpp" />
     <ClCompile Include="GameContext.cpp" />
     <ClCompile Include="GameInitState.cpp" />
+    <ClCompile Include="GameState.cpp" />
     <ClCompile Include="King.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -126,6 +128,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Building.h" />
+    <ClInclude Include="BuildingArea.h" />
     <ClInclude Include="CardReader.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="CircularBuffer.h" />
@@ -136,6 +139,7 @@
     <ClInclude Include="EndGame.h" />
     <ClInclude Include="GameContext.h" />
     <ClInclude Include="GameInitState.h" />
+    <ClInclude Include="GameState.h" />
     <ClInclude Include="IServer.h" />
     <ClInclude Include="King.h" />
     <ClInclude Include="Player.h" />

@@ -1,8 +1,13 @@
 #pragma once
-class GameInitState
+#include "GameState.h"
+
+class GameInitState : public GameState
 {
 public:
-	GameInitState();
-	~GameInitState();
+	using GameState::GameState;
+
+	// Inherited via GameState
+	virtual void EnterState() override;
+	virtual void LeaveState() override;
 };
 
