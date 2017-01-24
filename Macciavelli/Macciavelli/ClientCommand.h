@@ -12,21 +12,25 @@
 
 #include <string>
 #include <memory>
+#include "Client.h"
 
 class ClientInfo;
 
 
 class ClientCommand {
 public:
-    ClientCommand(const std::string& command_text, std::weak_ptr<ClientInfo> client_info)
-    : cmd{command_text}, info{client_info} {}
+    ClientCommand(const std::string& command_text, std::weak_ptr<ClientInfo> client_info, Client client)
+		: cmd{ command_text }, info{ client_info }, _client{ client } {}
 
     std::string get_cmd() const { return cmd; }
     std::weak_ptr<ClientInfo> get_client_info() const { return info; }
+	Client& const GetClient();
 
 private:
     std::string cmd;
     std::weak_ptr<ClientInfo> info;
+	Client _client;
+
 };
 
 #endif /* defined(__socketexample__ClientCommand__) */

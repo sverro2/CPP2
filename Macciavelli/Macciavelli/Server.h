@@ -10,36 +10,42 @@
 #include "Socket.h"
 #include "Sync_queue.h"
 #include "ClientCommand.h"
-#include "Player.h"
+#include "Client.h"
 #include "ClientInfo.h"
+#include "IServer.h"
 
 using namespace std;
 
-class Server
+class Server : public IServer
 {
 public:
 	Server();
 
 	//Request result value from client.
-	const string requestString(const string player_name, const string question); 
-	const int requestInt(const string player_name, const string question);
-	const int requestIntWithinRange(const string player_name, string question, int min, int max);
-	const int requestOptionByIndex(const string player_name, const vector<string> options, const string question);
+	const string RequestString(const string player_name, const string question) override; 
+	const int RequestInt(const string player_name, const string question) override;
+	const int RequestIntWithinRange(const string player_name, string question, int min, int max) override;
+	const int RequestOptionByIndex(const string player_name, const vector<string> options, const string question) override;
 
 	//Notifications to client.
-	void sendMessage(const string player_name, const string message);
-	void sendMessage(const vector<string> player_names, const string message);
+	void SendMessage(const string player_name, const string message) override;
+	void SendMessage(const vector<string> player_names, const string message) override;
 
 	void startListening(const int port);
 
 private:
 	bool _running = true;
+	bool _game_started = false;
 	string _prompt = "machiavelli> ";
 	Sync_queue<ClientCommand> _queue;
 	map<string, shared_ptr<ClientInfo>> _clients;
 
-	void consume_command();
+	//void consume_command();
 	void handle_client(Socket client);
 	shared_ptr<ClientInfo> init_client_session(Socket client);
+
+	const std::string ReadPlayerInput(const std::string& const player);
+
+	std::string _current_player = "";
 };
 

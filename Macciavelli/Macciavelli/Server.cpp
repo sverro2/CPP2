@@ -1,110 +1,109 @@
 #include "Server.h"
+#include "GameController.h"
+#include "EndGame.h"
 
 Server::Server()
 {
 }
 
-const string Server::requestString(const string player_name, const string question)
+const string Server::RequestString(const string player_name, const string question)
 {
 	_clients[player_name]->get_socket().write(question);
-	string result;
-	_clients[player_name]->get_socket().readline([&result](std::string input) {
-		result = input;
-	});
+	string result{ ReadPlayerInput(player_name) };
 	return result;
 }
 
-const int Server::requestInt(const string player_name, const string question)
+const int Server::RequestInt(const string player_name, const string question)
 {
-	sendMessage(player_name, question);
+	SendMessage(player_name, question + "(input number)");
 	try {
-		int result;
-		_clients[player_name]->get_socket().readline([&result](std::string input) {
-			result = stoi(input);
-		});
+		int result{ stoi(ReadPlayerInput(player_name)) };
 		return result;
 	}
 	catch (...) {
-		sendMessage(player_name, "Invalid input given!");
-		return this->requestInt(player_name, question);
+		SendMessage(player_name, "Invalid input given!");
+		return this->RequestInt(player_name, question);
 	}
 }
 
-const int Server::requestIntWithinRange(const string player_name, const string question, const int min, const int max)
+const int Server::RequestIntWithinRange(const string player_name, const string question, const int min, const int max)
 {
-	sendMessage(player_name, question);
+	std::string compiled_question{ question + "(" + std::to_string(min) + " - " + std::to_string(max) + ")" };
+	SendMessage(player_name, compiled_question);
 	try {
-		int result;
-		_clients[player_name]->get_socket().readline([&result](std::string input) {
-			result = stoi(input);
-		});
+		int result{ stoi(ReadPlayerInput(player_name)) };
 
 		if (result > max || result < min) {
-			sendMessage(player_name, "Number not in range!");
-			return this->requestIntWithinRange(player_name, question, min, max);
+			SendMessage(player_name, "Number not in range!");
+			return this->RequestIntWithinRange(player_name, question, min, max);
 		}
 		else {
 			return result;
 		}
 	}
 	catch (...) {
-		sendMessage(player_name, "Invalid input given!");
-		return this->requestIntWithinRange(player_name, question, min, max);
+		SendMessage(player_name, "Invalid input given!");
+		return this->RequestIntWithinRange(player_name, question, min, max);
 	}
 }
 
-const int Server::requestOptionByIndex(const string player_name, const vector<string> options, const string question)
+const int Server::RequestOptionByIndex(const string player_name, const vector<string> options, const string question)
 {
-	sendMessage(player_name, question);
-
+	SendMessage(player_name, question);
+	std::string player_input;
 	for (int i = 1; i <= options.size(); i++)
 	{
-		sendMessage(player_name, "[" + to_string(i) + "] " + options.at(i - 1));
+		SendMessage(player_name, "[" + to_string(i) + "] " + options.at(i - 1));
 	}
 
 	try {
-		int result;
-		_clients[player_name]->get_socket().readline([&result](std::string input) {
-			result = stoi(input);
-		});
+		player_input = ReadPlayerInput(player_name);
+		int result{ stoi(player_input) };
+
 		if (result > options.size() || result < 1) {
-			sendMessage(player_name, "Number not in range!");
-			return this->requestOptionByIndex(player_name, options, question);
+			SendMessage(player_name, "Number not in range!");
+			return this->RequestOptionByIndex(player_name, options, question);
 		}
 		else {
 			return result - 1;
 		}
 	}
 	catch (...) {
-		sendMessage(player_name, "Invalid input given!");
-		return this->requestOptionByIndex(player_name, options, question);
+		auto option_index_it{ std::find(options.begin(), options.end(), player_input) };
+
+		if (option_index_it == options.end()) {
+			SendMessage(player_name, "Invalid input given!");
+			return this->RequestOptionByIndex(player_name, options, question);
+		}
+		else {
+			return option_index_it - options.begin();
+		}
 	}
 }
 
-void Server::sendMessage(const string player_name, const string message)
+void Server::SendMessage(const string player_name, const string message)
 {
-	_clients[player_name]->get_socket().write(message);
+	_clients[player_name]->get_socket().write(message + "\r\n");
 }
 
-void Server::sendMessage(const vector<string> player_names, const string message)
+void Server::SendMessage(const vector<string> player_names, const string message)
 {
 	for (int i = 0; i < player_names.size(); i++)
 	{
-		sendMessage(player_names[i], message);
+		SendMessage(player_names[i], message);
 	}
 }
 
 void Server::startListening(const int port)
 {
 	vector<thread> all_threads;
-	// start command consumer thread
-
-	all_threads.emplace_back([this] { consume_command(); });
 
 	// create a server socket
 	try {
 		ServerSocket server{ port };
 		cerr << "server listening" << '\n';
+
+		//init players
 		while (_running) {
 			// wait for connection from client; will create new socket
 			server.accept([&all_threads, this](Socket client) {
@@ -112,7 +111,32 @@ void Server::startListening(const int port)
 				all_threads.emplace_back([&client, this] { handle_client(move(client)); });
 			});
 			this_thread::sleep_for(chrono::milliseconds(100));
+
+			//when to players are added, the game can be started
+			if (_clients.size() == 2) {
+				break;
+			}
 		}
+
+		//initialize game
+		if (_running) {
+			GameController game_controller(*this);
+
+			//play game
+			while (_running) {
+				//make sure the game currently has two online players
+				if (_clients.size() < 2) {
+					break;
+				}
+
+				this_thread::sleep_for(chrono::milliseconds(100));
+			}
+		}
+
+		std::cout << "Not enough players, quiting game now!" << std::endl;
+	}
+	catch (const EndGame& end_of_game) {
+		std::cout << "Someone has ended our game... Quiting game..." << std::endl;
 	}
 	catch (const exception& ex) {
 		cerr << ex.what() << ", resuming..." << '\n';
@@ -126,50 +150,6 @@ void Server::startListening(const int port)
 	}
 }
 
-void Server::consume_command() // runs in its own thread
-{
-	try {
-		while (_running) {
-			ClientCommand command{ _queue.get() }; // will block here unless there are still command objects in the queue
-			if (auto clientInfo = command.get_client_info().lock()) {
-				auto &client = clientInfo->get_socket();
-				auto &player = clientInfo->get_player();
-				try {
-					auto com = command.get_cmd();
-						
-						if (com == "Test")
-						{
-							auto result = requestString("HulkHogan", "Dit is een testvraag?");
-							sendMessage(player.get_name(), result);
-						}
-						else
-						{
-						
-						}
-
-
-					client << player.get_name() << ", you wrote: '" << command.get_cmd() << "', but I'll ignore that for now.\r\n" << _prompt;
-				}
-				catch (const exception& ex) {
-					cerr << "*** exception in consumer thread for player " << player.get_name() << ": " << ex.what() << '\n';
-					if (client.is_open()) {
-						client.write("Sorry, something went wrong during handling of your request.\r\n");
-					}
-				}
-				catch (...) {
-					cerr << "*** exception in consumer thread for player " << player.get_name() << '\n';
-					if (client.is_open()) {
-						client.write("Sorry, something went wrong during handling of your request.\r\n");
-					}
-				}
-			}
-		}
-	}
-	catch (...) {
-		cerr << "consume_command crashed\n";
-	}
-}
-//Hetzelfde
 void Server::handle_client(Socket client) // this function runs in a separate thread
 {
 	try {
@@ -177,7 +157,7 @@ void Server::handle_client(Socket client) // this function runs in a separate th
 		auto &socket = client_info->get_socket();
 		auto &player = client_info->get_player();
 
-		socket << "Welcome, " << player.get_name() << ", have fun playing our game!\r\n" << _prompt;
+		socket << "Welcome, " << player.get_name() << ", have fun playing our game!\r\n";
 
 		// Add client to the list of connected clients using the name as the identifier
 		_clients.insert(std::pair <string, std::shared_ptr<ClientInfo>>(player.get_name(), client_info));
@@ -189,16 +169,22 @@ void Server::handle_client(Socket client) // this function runs in a separate th
 				if (socket.readline([&cmd](std::string input) { cmd = input; })) {
 					cerr << '[' << socket.get_dotted_ip() << " (" << socket.get_socket() << ") " << player.get_name() << "] " << cmd << "\r\n";
 
-					if (cmd == "quit") {
+					if (cmd == "quit" || cmd == "quit_server") {
 						socket.write("Bye!\r\n");
-						break; // out of game loop, will end this thread and close connection
-					}
-					else if (cmd == "quit_server") {
+						for (const auto& client : _clients) {
+							SendMessage(client.first, "Someone left... Bye! We hope you had some fun!");
+						}
 						_running = false;
 					}
 
-					ClientCommand command{ cmd, client_info };
-					_queue.put(command);
+					//When the current player has inserted some input
+					if (player.get_name() == _current_player) {
+						ClientCommand command{ cmd, client_info, player };
+						_queue.put(command);
+					}
+					else {
+						SendMessage(player.get_name(), "Sorry, it's not your turn. Wait until your opponent has finished...");
+					}
 				};
 
 			}
@@ -208,6 +194,8 @@ void Server::handle_client(Socket client) // this function runs in a separate th
 			catch (...) {
 				socket.write("ERROR: something went wrong during handling of your request. Sorry!\r\n");
 			}
+
+			this_thread::sleep_for(chrono::milliseconds(100));
 		}
 		// close weg
 	}
@@ -230,6 +218,26 @@ shared_ptr<ClientInfo> Server::init_client_session(Socket client) {
 		done = client.readline([&name](std::string input) {
 			name = input;
 		});
+		this_thread::sleep_for(chrono::milliseconds(100));
 	}
-	return make_shared<ClientInfo>(move(client), Player{ name });
+	return make_shared<ClientInfo>(move(client), Client{ name });
+}
+
+const std::string Server::ReadPlayerInput(const std::string & const player)
+{
+	//create prompt for user
+	_clients[player]->get_socket().write(_prompt);
+
+	//set current player
+	_current_player = player;
+
+	ClientCommand command{ _queue.get() };
+
+	if (!_running) {
+		throw EndGame();
+	}
+
+	//return command string
+	std::string input{ command.get_cmd() };
+	return std::move(input);
 }

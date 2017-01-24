@@ -17,5 +17,6 @@ void RunServer() {
 int main(int argc, const char * argv[])
 {	
 	RunServer();
+
 	_CrtDumpMemoryLeaks();
 }

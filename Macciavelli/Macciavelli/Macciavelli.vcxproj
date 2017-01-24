@@ -110,8 +110,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ClientCommand.cpp" />
+    <ClCompile Include="EndGame.cpp" />
+    <ClCompile Include="GameController.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="Socket.cpp" />
     <ClCompile Include="throw.cpp" />
@@ -120,7 +122,10 @@
     <ClInclude Include="CircularBuffer.h" />
     <ClInclude Include="ClientCommand.h" />
     <ClInclude Include="ClientInfo.h" />
-    <ClInclude Include="Player.h" />
+    <ClInclude Include="Client.h" />
+    <ClInclude Include="EndGame.h" />
+    <ClInclude Include="GameController.h" />
+    <ClInclude Include="IServer.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="Socket.h" />
     <ClInclude Include="Sync_queue.h" />
