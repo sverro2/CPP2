@@ -4,7 +4,8 @@
 
 void GameInitState::EnterState()
 {
-	
+	_context.ShuffleBuildingCards(std::move(CardReader::ReadBuildings("Data/Bouwkaarten.csv")));
+	std::vector<Character> characters{ std::move(CardReader::ReadCharacters("Data/karakterkaaten.csv")) };
 	std::vector<std::string> options;
 	options.push_back("young");
 	options.push_back("old");

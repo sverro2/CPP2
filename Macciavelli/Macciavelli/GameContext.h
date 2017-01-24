@@ -25,6 +25,7 @@ public:
 	const Building TakeBuildingCard();
 	const std::vector<Character>& LookAtRemainingCharacterCards();
 	const bool TakeCharacterCard(Character character);
+	const bool HasBuildingCards();
 
 	const std::default_random_engine& GetRandomEngine() const;
 private:

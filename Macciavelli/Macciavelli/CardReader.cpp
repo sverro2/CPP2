@@ -4,7 +4,7 @@
 #include <iterator>
 #include <exception>
 
-const std::vector<Building> CardReader::ReadBuildings(const char* building_file)
+std::vector<Building> CardReader::ReadBuildings(const char* building_file)
 {	
 	try {
 		std::ifstream in(building_file);
@@ -18,7 +18,7 @@ const std::vector<Building> CardReader::ReadBuildings(const char* building_file)
 	}
 }
 
-const std::vector<Building> CardReader::ReadCharacters(const char* character_file)
+std::vector<Building> CardReader::ReadCharacters(const char* character_file)
 {
 	std::vector<Building> all_characters;
 	return std::move(all_characters);

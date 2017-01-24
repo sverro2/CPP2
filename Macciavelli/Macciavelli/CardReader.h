@@ -6,7 +6,7 @@
 class CardReader
 {
 public:
-	static const std::vector<Building> ReadBuildings(const char* building_file);
-	static const std::vector<Building> ReadCharacters(const char* character_file);
+	static std::vector<Building> ReadBuildings(const char* building_file);
+	static std::vector<Character> ReadCharacters(const char* character_file);
 };
 

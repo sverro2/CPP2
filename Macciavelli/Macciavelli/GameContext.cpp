@@ -98,6 +98,11 @@ const bool GameContext::TakeCharacterCard(Character character)
 	}
 }
 
+const bool GameContext::HasBuildingCards()
+{
+	return !_building_deck.empty();
+}
+
 const std::default_random_engine & GameContext::GetRandomEngine() const
 {
 	return _random_engine;
