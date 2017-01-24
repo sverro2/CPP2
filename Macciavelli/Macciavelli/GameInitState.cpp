@@ -1,11 +1,17 @@
 #include "GameInitState.h"
 #include "GameContext.h"
 #include "CardReader.h"
+#include "EndGame.h"
 
 void GameInitState::EnterState()
 {
 	_context.ShuffleBuildingCards(std::move(CardReader::ReadBuildings("Data/Bouwkaarten.csv")));
 	std::vector<Character> characters{ std::move(CardReader::ReadCharacters("Data/karakterkaaten.csv")) };
+
+	if (_context.HasBuildingCards() && !characters.empty()) {
+		throw EndGame();
+	}
+
 	std::vector<std::string> options;
 	options.push_back("young");
 	options.push_back("old");

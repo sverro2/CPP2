@@ -18,8 +18,16 @@ std::vector<Building> CardReader::ReadBuildings(const char* building_file)
 	}
 }
 
-std::vector<Building> CardReader::ReadCharacters(const char* character_file)
+std::vector<Character> CardReader::ReadCharacters(const char* character_file)
 {
-	std::vector<Building> all_characters;
-	return std::move(all_characters);
+	try {
+		std::ifstream in(character_file);
+
+		std::vector<Character> all_characters{ std::istream_iterator<Character>(in),{} };
+		return std::move(all_characters);
+	}
+	catch (...) {
+		std::cerr << "Sorry, but we could not load the buildings file" << std::endl;
+		return std::vector<Character>();
+	}
 }
