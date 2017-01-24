@@ -5,10 +5,12 @@
 
 void GameInitState::EnterState()
 {
-	_context.ShuffleBuildingCards(std::move(CardReader::ReadBuildings("Data/Bouwkaarten.csv")));
+	_context.ShuffleBuildingCards(std::move(CardReader::ReadBuildings("Data/Bouwkarten.csv")));
 	std::vector<Character> characters{ std::move(CardReader::ReadCharacters("Data/karakterkaaten.csv")) };
 
-	if (_context.HasBuildingCards() && !characters.empty()) {
+	if (!_context.HasBuildingCards() || characters.empty()) {
+		std::cout << "Check your CSV file configuration." << std::endl;
+		_server.SendMessageToAll("Server is not cofigured correctly...");
 		throw EndGame();
 	}
 

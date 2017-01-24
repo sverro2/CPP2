@@ -14,20 +14,20 @@ void GameScoreState::EnterState()
 	//Fetching the player with the highest score.
 	for (int i = 0; i < players.size(); i++)
 	{
-		_server.SendMessage(players[i].GetName(), "Calculating score..");
+		_server.SendMessage(players[i]->GetName(), "Calculating score..");
 
 		//First iteration through players.
 		if (player_with_highest_score = nullptr)
 		{
-			player_with_highest_score = std::make_shared<Player>(players[i]);
+			player_with_highest_score = players[i];
 		}
 		else
 		{
 			//If this player has a higher score then the player_with_highest_score.
-			if (player_with_highest_score->GetScore() < players[i].GetScore())
+			if (player_with_highest_score->GetScore() < players[i]->GetScore())
 			{
 				//Declare this player the player_with_highest_score.
-				player_with_highest_score = std::make_shared<Player>(players[i]);
+				player_with_highest_score = players[i];
 			}
 		}
 	}

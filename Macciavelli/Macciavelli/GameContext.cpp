@@ -22,14 +22,14 @@ void GameContext::SwitchToState(std::unique_ptr<GameState>&& state)
 	_current_gamestate->EnterState();
 }
 
-const std::vector<Player> GameContext::GetPlayers() const
+const std::vector<std::shared_ptr<Player>>& GameContext::GetPlayers() const
 {
 	return _players;
 }
 
 void GameContext::ResetAll()
 {
-	_current_player = "";
+	_current_player = nullptr;
 	_players.clear();
 	_character_deck.clear();
 	_building_deck.swap(std::stack<Building>());
@@ -106,6 +106,30 @@ const bool GameContext::TakeCharacterCard(Character character)
 const bool GameContext::HasBuildingCards()
 {
 	return !_building_deck.empty();
+}
+
+const std::shared_ptr<Player>& GameContext::GetPlayerAtRightHandOfCurrent() const
+{
+	auto current_player_index{ std::find(_players.begin(), _players.end(), _current_player) };
+	
+	current_player_index++;
+
+	if (current_player_index == _players.end()) {
+		return _players[0];
+	}
+	else {
+		return *current_player_index;
+	}
+}
+
+void GameContext::SetCurrentPlayer(const std::shared_ptr<Player>& player)
+{
+	_current_player = player;
+}
+
+const std::shared_ptr<Player>& GameContext::GetCurrentPlayer() const
+{
+	return _current_player;
 }
 
 const std::default_random_engine & GameContext::GetRandomEngine() const

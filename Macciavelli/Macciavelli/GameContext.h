@@ -14,24 +14,27 @@ class GameContext
 {
 public:
 	GameContext(IServer& server);
-	const std::vector<Player> GetPlayers() const;
 	void SwitchToState(std::unique_ptr<GameState>&& _state);
 	void ResetAll();
 	void ResetRemainingCharacterCards();
 	void ShuffleBuildingCards(std::vector<Building>&& all_remaining_buildings = std::vector<Building>());
 	void AddCardToGarbagePile(Building building);
+	void SetCurrentPlayer(const std::shared_ptr<Player>& player);
 
 	//getters
+	const std::vector<std::shared_ptr<Player>>& GetPlayers() const;
 	const Building TakeBuildingCard();
 	const std::vector<Character>& LookAtRemainingCharacterCards();
 	const bool TakeCharacterCard(Character character);
 	const bool HasBuildingCards();
+	const std::shared_ptr<Player>& GetPlayerAtRightHandOfCurrent() const;
+	const std::shared_ptr<Player>& GetCurrentPlayer() const;
 
 	const std::default_random_engine& GetRandomEngine() const;
 private:
 	IServer& _server;
-	std::vector<Player> _players;
-	std::string _current_player;
+	std::vector<shared_ptr<Player>> _players;
+	std::shared_ptr<Player> _current_player;
 
 	//character
 	std::vector<Character> _character_deck;
