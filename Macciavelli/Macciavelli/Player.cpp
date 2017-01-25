@@ -107,6 +107,11 @@ void Player::AddBuilding(const Building building)
 	_available_buildings.push_back(building);
 }
 
+void Player::SwapBuildingCards(const std::vector<Building> new_buildings)
+{
+	_available_buildings = new_buildings;
+}
+
 void Player::AddCharacter(const Character character)
 {
 	_characters.push_back(character);

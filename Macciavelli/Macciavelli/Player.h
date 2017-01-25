@@ -26,6 +26,9 @@ public:
 	//Add Building card to hand.
 	void AddBuilding(const Building building);
 
+	//Swaps Building cards.
+	void SwapBuildingCards(const std::vector<Building> new_buildings);
+
 	//Add character card to hand.
 	void AddCharacter(const Character character);
 
