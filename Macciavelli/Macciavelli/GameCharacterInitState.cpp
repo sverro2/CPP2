@@ -55,7 +55,7 @@ void GameCharacterInitState::EnterState()
 		_context.SetCurrentPlayer(_context.GetPlayerAtRightHandOfCurrent());
 	}
 
-	//TODO:: set new state
+	_context.SwitchToNextCharacter();
 }
 
 void GameCharacterInitState::LeaveState()

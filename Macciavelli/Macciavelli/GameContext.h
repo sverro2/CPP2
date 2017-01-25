@@ -16,6 +16,7 @@ class GameContext
 public:
 	GameContext(IServer& server);
 	void SwitchToState(std::unique_ptr<GameState>&& _state);
+	void SwitchToNextCharacter();
 	void ResetAll();
 	void ResetRemainingCharacterCards();
 	void ShuffleBuildingCards(std::vector<Building>&& all_remaining_buildings = std::vector<Building>());

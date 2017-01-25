@@ -2,6 +2,8 @@
 #include "GameContext.h"
 #include "IServer.h"
 #include "GameInitState.h"
+#include "GameCharacterStateFactory.h"
+#include "EndGame.h"
 
 GameContext::GameContext(IServer& server) : _server{ server }
 {
@@ -31,6 +33,26 @@ void GameContext::SwitchToState(std::unique_ptr<GameState>&& state)
 
 	//Start new state
 	_current_gamestate->EnterState();
+}
+
+void GameContext::SwitchToNextCharacter()
+{
+	std::shared_ptr<Player> player;
+	CharacterType type{CharacterType::MURDERER};
+
+	while (player == nullptr) {
+		if (_character_index + 1 > GetAmountOfCharactersInGame()) {
+			_server.SendMessageToAll("The game tried to start another character state, but all characters have already been played. Excuse us, this error is unrecoverable...");
+			throw EndGame();
+		}
+
+		type = _character_deck.at(_character_index).GetCharacterType();
+		player = _player_roles[type];
+		_character_index++;
+	}
+
+	_current_player = player;
+	SwitchToState(std::move(GameCharacterStateFactory::GetCharacterState(type, *this, _server)));
 }
 
 const std::vector<std::shared_ptr<Player>>& GameContext::GetPlayers() const

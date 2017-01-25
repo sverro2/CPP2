@@ -1,5 +1,6 @@
 #include "GameCharacterState.h"
 #include "GameContext.h"
+#include "GameCharacterInitState.h"
 #include "Color.h"
 
 GameCharacterState::GameCharacterState(GameContext & _context, IServer & _server, CharacterType type) : GameState{_context, _server}, _type{type}
@@ -39,6 +40,14 @@ void GameCharacterState::EnterState()
 	{
 		ShowCurrentPlayerBuildingCards();
 		ShowOptionToConstructBuilding();
+	}
+
+	if (_context.GetAmountOfCharactersInGame() == _context.GetCurrentCharacterIndex() + 1) {
+		_server.SendMessageToAll("All characters have been played... Next round.");
+		_context.SwitchToState(std::move(std::make_unique<GameCharacterInitState>(_context, _server)));
+	}
+	else {
+		_context.SwitchToNextCharacter();
 	}
 }
 
