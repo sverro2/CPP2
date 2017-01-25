@@ -119,6 +119,11 @@ const bool Player::ConstructBuilding(const Building building)
 
 }
 
+void Player::DemolishBuilding(const unsigned short index)
+{
+	_building_area.erase(_building_area.begin() + index);
+}
+
 void Player::ResetCharacters()
 {
 	_characters.clear();

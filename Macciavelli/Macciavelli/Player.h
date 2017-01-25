@@ -29,6 +29,9 @@ public:
 	//Constructs a building from hand, returns bool if constructed.
 	const bool ConstructBuilding(const Building building);
 
+	//Deomishes a building by index.
+	void DemolishBuilding(const unsigned short index);
+
 	//Resets all characters.
 	void ResetCharacters();
 
