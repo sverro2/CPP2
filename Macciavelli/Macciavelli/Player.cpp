@@ -6,6 +6,7 @@ Player::Player(const std::string name, const unsigned short age) :
 	_name{ name },
 	_age{ age }
 {
+	_first_to_eight_buildings = false;
 }
 
 const std::string & Player::GetName() const
@@ -80,9 +81,35 @@ const std::vector<Building>& Player::LookAtConstructedBuildings() const
 	return _building_area;
 }
 
+const bool Player::WasFirstToEightBuildings() const
+{
+	return _first_to_eight_buildings;
+}
+
+const bool Player::HasCharacter(const CharacterType character_type) const
+{
+	bool has_character = false;
+
+	for (int i = 0; i < _characters.size(); i++)
+	{
+		//If has character.
+		if (_characters[i].GetCharacterType() == character_type)
+		{
+			has_character = true;
+		}
+	}
+
+	return has_character;
+}
+
 void Player::AddBuilding(const Building building)
 {
 	_available_buildings.push_back(building);
+}
+
+void Player::SwapBuildingCards(const std::vector<Building> new_buildings)
+{
+	_available_buildings = new_buildings;
 }
 
 void Player::AddCharacter(const Character character)
@@ -113,6 +140,11 @@ const bool Player::ConstructBuilding(const Building building)
 
 }
 
+void Player::DemolishBuilding(const unsigned short index)
+{
+	_building_area.erase(_building_area.begin() + index);
+}
+
 void Player::ResetCharacters()
 {
 	_characters.clear();
@@ -133,4 +165,9 @@ const bool Player::MutateMoney(const unsigned short money_balance)
 void Player::EarnMoney(const unsigned short amount)
 {
 	_money += amount;
+}
+
+void Player::DeclareFirstToEight()
+{
+	_first_to_eight_buildings = true;
 }

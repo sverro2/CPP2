@@ -27,7 +27,7 @@ public:
 	void AddPlayer(const std::shared_ptr<Player>& player);
 	void SetCharacterDeck(std::vector<Character>&& character_deck);
 
-	//Make sure the right character gets activated
+	//Make sure the right character gets activated.
 	const size_t GetCurrentCharacterIndex() const;
 	void ResetCurrentCharacterIndex();
 	const size_t GetAmountOfCharactersInGame() const;
@@ -36,7 +36,10 @@ public:
 	void SetRobbedCharacter(std::unique_ptr<Character>&& robbed_character);
 	void SetKilledCharacter(std::unique_ptr<Character>&& killed_character);
 
-	//getters
+	//Mark game as done
+	void MarkGameAsDone();
+
+	//Getters
 	const std::vector<std::shared_ptr<Player>>& GetPlayers() const;
 	const Building TakeBuildingCard();
 	const std::vector<Character>& LookAtRemainingCharacterCards();
@@ -56,14 +59,14 @@ private:
 	std::vector<shared_ptr<Player>> _players;
 	std::shared_ptr<Player> _current_player;
 
-	//Character
+	//Character.
 	std::vector<Character> _character_deck;
 	std::vector<Character> _characters_remaining;
 
-	//Player roles
+	//Player roles.
 	std::map<CharacterType, std::shared_ptr<Player>> _player_roles;
 
-	//Buildings
+	//Buildings.
 	std::stack<Building> _building_deck;
 	std::stack<Building> _garbage_pile;
 
@@ -72,11 +75,14 @@ private:
 	std::unique_ptr<King> _king;
 	std::default_random_engine _random_engine;
 
-	//the character index that is activated right now
+	//The character index that is activated right now.
 	size_t _character_index;
 
 	//character states
 	std::unique_ptr<Character> _killed_character;
 	std::unique_ptr<Character> _robbed_character;
+
+	//End of game
+	bool _done;
 };
 

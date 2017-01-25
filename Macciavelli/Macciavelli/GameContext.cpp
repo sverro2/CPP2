@@ -2,12 +2,16 @@
 #include "GameContext.h"
 #include "IServer.h"
 #include "GameInitState.h"
+#include "GameScoreState.h"
 #include "GameCharacterInitState.h"
 #include "GameCharacterStateFactory.h"
 #include "EndGame.h"
 
 GameContext::GameContext(IServer& server) : _server{ server }
 {
+	//Mark game as not done.
+	_done = false;
+
 	//Player roles in good order.
 	_player_roles.insert(std::pair<CharacterType, std::shared_ptr<Player>>(MURDERER, nullptr));
 	_player_roles.insert(std::pair<CharacterType, std::shared_ptr<Player>>(THIEF, nullptr));
@@ -46,7 +50,18 @@ void GameContext::SwitchToNextCharacter()
 		//if there are no characters left initialize another round
 		if (_character_index + 1 > GetAmountOfCharactersInGame()) {
 			_server.SendMessageToAll("All characters have been played... Next round.");
-			SwitchToState(std::move(std::make_unique<GameCharacterInitState>(*this, _server)));
+
+			//If game is done.
+			if (_done)
+			{
+				//If done, go to score state.
+				SwitchToState(std::move(std::make_unique<GameScoreState>(*this, _server)));
+			}
+			else
+			{
+				//If not done, go to new character state.
+				SwitchToState(std::move(std::make_unique<GameCharacterInitState>(*this, _server)));
+			}
 			return;
 		}
 
@@ -214,6 +229,11 @@ void GameContext::SetRobbedCharacter(std::unique_ptr<Character>&& robbed_charact
 void GameContext::SetKilledCharacter(std::unique_ptr<Character>&& killed_character)
 {
 	_killed_character = std::move(killed_character);
+}
+
+void GameContext::MarkGameAsDone()
+{
+	_done = true;
 }
 
 const std::shared_ptr<Player>& GameContext::GetCurrentPlayer() const

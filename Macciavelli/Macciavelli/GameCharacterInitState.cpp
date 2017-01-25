@@ -60,6 +60,16 @@ void GameCharacterInitState::EnterState()
 		_context.SetCurrentPlayer(_context.GetPlayerAtRightHandOfCurrent());
 	}
 
+	//Initialise base building cards for eacht player.
+	for (int i = 0; i < _context.GetPlayers().size(); i++)
+	{
+		//For each player take 4 building cards.
+		for (int j = 1; j <= 4; j++)
+		{
+			_context.GetPlayers()[i]->AddBuilding(_context.TakeBuildingCard());
+		}
+	}
+
 	_context.SwitchToNextCharacter();
 }
 

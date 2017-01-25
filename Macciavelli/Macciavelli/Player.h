@@ -18,9 +18,16 @@ public:
 	const int GetMoney() const;
 	const std::vector<Building>& LookAtBuildingsInHand() const;
 	const std::vector<Building>& LookAtConstructedBuildings() const;
+	const bool WasFirstToEightBuildings() const;
+
+	//Has Character.
+	const bool HasCharacter(const CharacterType character_type) const;
 
 	//Add Building card to hand.
 	void AddBuilding(const Building building);
+
+	//Swaps Building cards.
+	void SwapBuildingCards(const std::vector<Building> new_buildings);
 
 	//Add character card to hand.
 	void AddCharacter(const Character character);
@@ -28,12 +35,18 @@ public:
 	//Constructs a building from hand, returns bool if constructed.
 	const bool ConstructBuilding(const Building building);
 
+	//Deomishes a building by index.
+	void DemolishBuilding(const unsigned short index);
+
 	//Resets all characters.
 	void ResetCharacters();
 
 	//Money
 	const bool MutateMoney(const unsigned short money_balance);
 	void EarnMoney(const unsigned short amount);
+
+	//Declare first to eight.
+	void DeclareFirstToEight();
 private:
 	const std::string _name;
 	const unsigned short _age;
