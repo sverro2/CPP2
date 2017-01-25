@@ -18,6 +18,7 @@ public:
 	const int GetMoney() const;
 	const std::vector<Building>& LookAtBuildingsInHand() const;
 	const std::vector<Building>& LookAtConstructedBuildings() const;
+	const bool WasFirstToEightBuildings() const;
 
 	//Add Building card to hand.
 	void AddBuilding(const Building building);
@@ -34,6 +35,9 @@ public:
 	//Money
 	const bool MutateMoney(const unsigned short money_balance);
 	void EarnMoney(const unsigned short amount);
+
+	//Declare first to eight.
+	void DeclareFirstToEight();
 private:
 	const std::string _name;
 	const unsigned short _age;
@@ -48,5 +52,8 @@ private:
 
 	//The constructed buildings.
 	std::vector<Building> _building_area;
+
+	//First to eight buildings.
+	bool _first_to_eight_buildings;
 };
 

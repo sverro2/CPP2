@@ -221,6 +221,11 @@ const size_t GameContext::GetAmountOfCharactersInGame() const
 	return _character_deck.size();
 }
 
+void GameContext::MarkGameAsDone()
+{
+	_done = true;
+}
+
 const std::shared_ptr<Player>& GameContext::GetCurrentPlayer() const
 {
 	return _current_player;

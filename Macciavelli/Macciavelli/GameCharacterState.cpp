@@ -232,6 +232,30 @@ void GameCharacterState::ShowOptionToConstructBuilding()
 			auto building = buildings[building_index];
 			_server.SendMessage(player_name, "You've built: " + building.GetName());
 			_server.SendMessageToAllBut(player_name, "Player: " + player_name + " has constructed: " + building.GetName() = " and it did cost " + std::to_string(building.GetCost()) + " coins.");
+		
+			//If player has more then or exactly 8 buildings, then the game should end after this round.
+			if (_context.GetCurrentPlayer()->LookAtConstructedBuildings().size() >= 8)
+			{
+				bool first_to_eight_buildings = true;
+
+				//Check if player was first to eight buildings.
+				for (int i = 0; i < _context.GetPlayers().size(); i++)
+				{
+					if (_context.GetPlayers()[i]->WasFirstToEightBuildings())
+					{
+						first_to_eight_buildings = false;
+					}
+				}
+
+				if (first_to_eight_buildings)
+				{
+					//This player was the first to achieve 8 buildings.
+					_context.GetCurrentPlayer()->DeclareFirstToEight();
+
+					//Mark this game as done (round will be finished).
+					_context.MarkGameAsDone();
+				}
+			}
 		}
 	}
 }

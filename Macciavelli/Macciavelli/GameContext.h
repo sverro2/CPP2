@@ -32,6 +32,9 @@ public:
 	void ResetCurrentCharacterIndex();
 	const size_t GetAmountOfCharactersInGame() const;
 
+	//Mark game as done
+	void MarkGameAsDone();
+
 	//Getters
 	const std::vector<std::shared_ptr<Player>>& GetPlayers() const;
 	const Building TakeBuildingCard();

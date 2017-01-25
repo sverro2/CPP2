@@ -6,6 +6,7 @@ Player::Player(const std::string name, const unsigned short age) :
 	_name{ name },
 	_age{ age }
 {
+	_first_to_eight_buildings = false;
 }
 
 const std::string & Player::GetName() const
@@ -80,6 +81,11 @@ const std::vector<Building>& Player::LookAtConstructedBuildings() const
 	return _building_area;
 }
 
+const bool Player::WasFirstToEightBuildings() const
+{
+	return _first_to_eight_buildings;
+}
+
 void Player::AddBuilding(const Building building)
 {
 	_available_buildings.push_back(building);
@@ -133,4 +139,9 @@ const bool Player::MutateMoney(const unsigned short money_balance)
 void Player::EarnMoney(const unsigned short amount)
 {
 	_money += amount;
+}
+
+void Player::DeclareFirstToEight()
+{
+	_first_to_eight_buildings = true;
 }
