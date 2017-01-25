@@ -2,6 +2,7 @@
 #include "GameContext.h"
 #include "IServer.h"
 #include "GameInitState.h"
+#include "GameCharacterInitState.h"
 #include "GameCharacterStateFactory.h"
 #include "EndGame.h"
 
@@ -41,9 +42,12 @@ void GameContext::SwitchToNextCharacter()
 	CharacterType type{CharacterType::MURDERER};
 
 	while (player == nullptr) {
+
+		//if there are no characters left initialize another round
 		if (_character_index + 1 > GetAmountOfCharactersInGame()) {
-			_server.SendMessageToAll("The game tried to start another character state, but all characters have already been played. Excuse us, this error is unrecoverable...");
-			throw EndGame();
+			_server.SendMessageToAll("All characters have been played... Next round.");
+			SwitchToState(std::move(std::make_unique<GameCharacterInitState>(*this, _server)));
+			return;
 		}
 
 		type = _character_deck.at(_character_index).GetCharacterType();

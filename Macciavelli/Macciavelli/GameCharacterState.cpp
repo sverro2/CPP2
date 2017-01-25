@@ -43,8 +43,7 @@ void GameCharacterState::EnterState()
 	}
 
 	if (_context.GetAmountOfCharactersInGame() == _context.GetCurrentCharacterIndex() + 1) {
-		_server.SendMessageToAll("All characters have been played... Next round.");
-		_context.SwitchToState(std::move(std::make_unique<GameCharacterInitState>(_context, _server)));
+		
 	}
 	else {
 		_context.SwitchToNextCharacter();

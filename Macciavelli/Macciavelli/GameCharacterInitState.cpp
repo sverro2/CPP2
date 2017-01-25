@@ -40,7 +40,7 @@ void GameCharacterInitState::EnterState()
 		_context.TakeCharacterCard(available_characters[character_index]);
 
 		//Assign character to player.
-		_context.AssignCharacterToPlayer(CharacterType(character_index), current_player);
+		_context.AssignCharacterToPlayer(available_characters.at(character_index).GetCharacterType(), current_player);
 
 		//Remove character from temp values.
 		available_characters = _context.LookAtRemainingCharacterCards();
