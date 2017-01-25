@@ -7,13 +7,14 @@
 class GameCharacterState : public GameState
 {
 public:
-	GameCharacterState(GameContext& _context, IServer& _server, CharacterType type);
+	GameCharacterState(GameContext& _context, IServer& _server, CharacterType type, const size_t max_amount_of_buildings_to_build = 1);
 
 	// Inherited via GameState
 	virtual void EnterState() override;
 	virtual void LeaveState() override;
 private:
 	CharacterType _type;
+	size_t _max_amount_of_buildings_to_build;
 
 	virtual int CalculateBonusIncome() = 0;
 	virtual void DoCharacterAction() = 0;

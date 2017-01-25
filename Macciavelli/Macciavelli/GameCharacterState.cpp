@@ -3,7 +3,7 @@
 #include "GameCharacterInitState.h"
 #include "Color.h"
 
-GameCharacterState::GameCharacterState(GameContext & _context, IServer & _server, CharacterType type) : GameState{_context, _server}, _type{type}
+GameCharacterState::GameCharacterState(GameContext & _context, IServer & _server, CharacterType type, const size_t max_amount_of_buildings_to_build) : GameState{_context, _server}, _type{type}, _max_amount_of_buildings_to_build{max_amount_of_buildings_to_build}
 {
 }
 
@@ -239,52 +239,54 @@ void GameCharacterState::ShowOptionToConstructBuilding()
 	}
 
 	construction_options.push_back("Nah... Maybe later");
-	
-	//Fetch chosen building index.
-	int building_index = _server.RequestOptionByIndex(player_name, construction_options, "Which building do you want to construct?");
 
-	if (building_index < construction_options.size() - 1) {
-		return;
-	}
+	for (int x{ 0 }; x < _max_amount_of_buildings_to_build; x++) {
+		//Fetch chosen building index.
+		int building_index = _server.RequestOptionByIndex(player_name, construction_options, "Which building do you want to construct?");
 
-	//If player cannot afford this building.
-	if (buildings[building_index].GetCost() > _context.GetCurrentPlayer()->GetMoney())
-	{
-		_server.SendMessage(player_name, "You cannot afford this building! Your balance is: " + std::to_string(_context.GetCurrentPlayer()->GetMoney()) + " and the building costs: " + std::to_string(buildings[building_index].GetCost()) + " coins.");
-	}
-	//Player can afford this building.
-	else
-	{
-		//If building is built.
-		if (_context.GetCurrentPlayer()->ConstructBuilding(buildings[building_index]))
+		if (building_index < construction_options.size() - 1) {
+			return;
+		}
+
+		//If player cannot afford this building.
+		if (buildings[building_index].GetCost() > _context.GetCurrentPlayer()->GetMoney())
 		{
-			auto building = buildings[building_index];
-			_server.SendMessage(player_name, "You've built: " + building.GetName());
-			_server.SendMessageToAllBut(player_name, "Player: " + player_name + " has constructed: " + building.GetName() = " and it did cost " + std::to_string(building.GetCost()) + " coins.");
-		
-			//If player has more then or exactly 8 buildings, then the game should end after this round.
-			if (_context.GetCurrentPlayer()->LookAtConstructedBuildings().size() >= 8)
+			_server.SendMessage(player_name, "You cannot afford this building! Your balance is: " + std::to_string(_context.GetCurrentPlayer()->GetMoney()) + " and the building costs: " + std::to_string(buildings[building_index].GetCost()) + " coins.");
+		}
+		//Player can afford this building.
+		else
+		{
+			//If building is built.
+			if (_context.GetCurrentPlayer()->ConstructBuilding(buildings[building_index]))
 			{
-				bool first_to_eight_buildings = true;
+				auto building = buildings[building_index];
+				_server.SendMessage(player_name, "You've built: " + building.GetName());
+				_server.SendMessageToAllBut(player_name, "Player: " + player_name + " has constructed: " + building.GetName() = " and it did cost " + std::to_string(building.GetCost()) + " coins.");
 
-				//Check if player was first to eight buildings.
-				for (int i = 0; i < _context.GetPlayers().size(); i++)
+				//If player has more then or exactly 8 buildings, then the game should end after this round.
+				if (_context.GetCurrentPlayer()->LookAtConstructedBuildings().size() >= 8)
 				{
-					if (_context.GetPlayers()[i]->WasFirstToEightBuildings())
+					bool first_to_eight_buildings = true;
+
+					//Check if player was first to eight buildings.
+					for (int i = 0; i < _context.GetPlayers().size(); i++)
 					{
-						first_to_eight_buildings = false;
+						if (_context.GetPlayers()[i]->WasFirstToEightBuildings())
+						{
+							first_to_eight_buildings = false;
+						}
 					}
-				}
 
-				if (first_to_eight_buildings)
-				{
-					//This player was the first to achieve 8 buildings.
-					_context.GetCurrentPlayer()->DeclareFirstToEight();
+					if (first_to_eight_buildings)
+					{
+						//This player was the first to achieve 8 buildings.
+						_context.GetCurrentPlayer()->DeclareFirstToEight();
 
-					//Mark this game as done (round will be finished).
-					_context.MarkGameAsDone();
+						//Mark this game as done (round will be finished).
+						_context.MarkGameAsDone();
+					}
 				}
 			}
 		}
-	}
+	}	
 }

@@ -149,6 +149,18 @@ void GameContext::ClearPlayerCharacters()
 
 const Building GameContext::TakeBuildingCard()
 {
+	//empty pile?
+	if (_building_deck.empty()) {
+		_server.SendMessageToAll("The pile of buildingcards was gone. We shuffled the 'garbage' pile, so we can continue the game");
+		ShuffleBuildingCards();
+	}
+
+	//still empty?
+	if (_building_deck.empty()) {
+		_server.SendMessageToAll("Not enough buildings to give y'all. Ending game in a tie.");
+		throw EndGame();
+	}
+
 	Building building{ _building_deck.top() };
 	_building_deck.pop();
 	return building;

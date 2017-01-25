@@ -2,7 +2,7 @@
 #include "Character.h"
 #include "GameContext.h"
 
-GameCharacterArchitectState::GameCharacterArchitectState(GameContext & context, IServer & server) : GameCharacterState{context, server, CharacterType::ARCHITECT}
+GameCharacterArchitectState::GameCharacterArchitectState(GameContext & context, IServer & server) : GameCharacterState{context, server, CharacterType::ARCHITECT, 3}
 {
 }
 
