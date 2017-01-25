@@ -15,7 +15,9 @@ public:
 	const unsigned short GetAge() const;
 	const std::vector<Character>& GetCharacters();
 	const int GetScore() const;
+	const int GetMoney() const;
 	const std::vector<Building>& LookAtBuildingsInHand() const;
+	const std::vector<Building>& LookAtConstructedBuildings() const;
 
 	//Add Building card to hand.
 	void AddBuilding(const Building building);
@@ -31,6 +33,7 @@ public:
 
 	//Money
 	const bool MutateMoney(const unsigned short money_balance);
+	void EarnMoney(const unsigned short amount);
 private:
 	const std::string _name;
 	const unsigned short _age;

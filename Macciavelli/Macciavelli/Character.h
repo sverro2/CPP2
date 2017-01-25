@@ -22,6 +22,7 @@ public:
 	const bool operator==(const Character& character) const;
 
 	static const CharacterType CharacterStringToEnum(const char* const name_string);
+	static const std::string CharacterEnumToString(const CharacterType character_type);
 	const std::string GetCharacterName() const;
 
 	//streaming

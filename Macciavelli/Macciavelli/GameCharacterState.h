@@ -14,7 +14,12 @@ private:
 
 	virtual int CalculateBonusIncome() = 0;
 	virtual void DoCharacterAction() = 0;
+	void ShowBalance();
+	void ShowTotalScore();
 	void ShowCardsInHand();
+	void ShowConstructedBuildings();
 	void ShowTableOfPlayer();
+	void ShowChoiceCoinsOrBuildingCards();
+	void ShowOptionToConstructBuilding();
 };
 

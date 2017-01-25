@@ -65,9 +65,19 @@ const int Player::GetScore() const
 	return score;
 }
 
+const int Player::GetMoney() const
+{
+	return _money;
+}
+
 const std::vector<Building>& Player::LookAtBuildingsInHand() const
 {
 	return _available_buildings;
+}
+
+const std::vector<Building>& Player::LookAtConstructedBuildings() const
+{
+	return _building_area;
 }
 
 void Player::AddBuilding(const Building building)
@@ -118,4 +128,9 @@ const bool Player::MutateMoney(const unsigned short money_balance)
 	else {
 		return false;
 	}
+}
+
+void Player::EarnMoney(const unsigned short amount)
+{
+	_money += amount;
 }
