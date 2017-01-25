@@ -40,6 +40,11 @@ void GameCharacterCondottiereState::DoCharacterAction()
 			//If player can afford to demolish this building.
 			if (oponent_buildings[i].GetCost() - 1 <= current_player->GetMoney())
 			{
+				//The "Kerker" cannot be removed by the condotierre
+				if (oponent_buildings[i].GetName() == "Kerker") {
+					continue;
+				}
+
 				demolition_options.push_back(oponent_buildings[i].GetName() + " (cost to destory: " + std::to_string(oponent_buildings[i].GetCost() - 1) + " coins)");
 			}
 		}

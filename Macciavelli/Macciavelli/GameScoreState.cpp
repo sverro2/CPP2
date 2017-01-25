@@ -39,6 +39,7 @@ void GameScoreState::EnterState()
 	_server.SendMessageToAllBut(player_with_highest_score->GetName(), player_with_highest_score->GetName() + " has won this game with a score of: " + std::to_string(player_with_highest_score->GetScore()));
 
 	//Switch to GameInitState state.
+	_server.SendMessageToAll("The game will restart now... When you want to exit the game, feel free to type 'quit'");
 	_context.SwitchToState(std::move(std::make_unique<GameInitState>(_context, _server)));
 }
 
