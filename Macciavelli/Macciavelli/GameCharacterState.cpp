@@ -208,9 +208,15 @@ void GameCharacterState::ShowOptionToConstructBuilding()
 		//Building the construction options string.
 		construction_options.push_back(buildings[i].GetName() + ": this building costs " + std::to_string(buildings[i].GetCost()) + " and has the color " + ColorToString(buildings[i].GetColor()));
 	}
+
+	construction_options.push_back("Nah... Maybe later");
 	
 	//Fetch chosen building index.
 	int building_index = _server.RequestOptionByIndex(player_name, construction_options, "Which building do you want to construct?");
+
+	if (building_index < construction_options.size() - 1) {
+		return;
+	}
 
 	//If player cannot afford this building.
 	if (buildings[building_index].GetCost() > _context.GetCurrentPlayer()->GetMoney())
