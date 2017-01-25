@@ -206,6 +206,16 @@ const size_t GameContext::GetAmountOfCharactersInGame() const
 	return _character_deck.size();
 }
 
+void GameContext::SetRobbedCharacter(std::unique_ptr<Character>&& robbed_character)
+{
+	_robbed_character = std::move(robbed_character);
+}
+
+void GameContext::SetKilledCharacter(std::unique_ptr<Character>&& killed_character)
+{
+	_killed_character = std::move(killed_character);
+}
+
 const std::shared_ptr<Player>& GameContext::GetCurrentPlayer() const
 {
 	return _current_player;
@@ -219,6 +229,26 @@ const std::default_random_engine & GameContext::GetRandomEngine() const
 std::unique_ptr<King>& GameContext::GetKingReference()
 {
 	return _king;
+}
+
+const std::map<CharacterType, std::shared_ptr<Player>>& GameContext::GetPlayerRoles() const
+{
+	return _player_roles;
+}
+
+const std::vector<Character>& GameContext::LookAtCharacterDeck()
+{
+	return _character_deck;
+}
+
+const std::unique_ptr<Character>& GameContext::GetRobbedCharacter() const
+{
+	return _robbed_character;
+}
+
+const std::unique_ptr<Character>& GameContext::GetKilledCharacter() const
+{
+	return _killed_character;
 }
 
 void GameContext::InitGame()

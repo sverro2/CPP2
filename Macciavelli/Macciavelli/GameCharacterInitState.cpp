@@ -8,6 +8,10 @@ void GameCharacterInitState::EnterState()
 	//Clear player characters.
 	_context.ClearPlayerCharacters();
 
+	//Clear player state
+	_context.SetRobbedCharacter(nullptr);
+	_context.SetKilledCharacter(nullptr);
+
 	//current king is current player
 	_context.SetCurrentPlayer(_context.GetKingReference()->GetKing());
 
@@ -16,6 +20,7 @@ void GameCharacterInitState::EnterState()
 
 	//reset current character index
 	_context.ResetCurrentCharacterIndex();
+
 
 	for (int i = 1; i <= 4; i++)
 	{

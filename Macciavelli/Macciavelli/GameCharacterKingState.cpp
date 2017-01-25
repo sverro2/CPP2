@@ -17,4 +17,6 @@ int GameCharacterKingState::CalculateBonusIncome()
 
 void GameCharacterKingState::DoCharacterAction()
 {
+	_context.GetKingReference()->SetKing(_context.GetCurrentPlayer());
+	_server.SendMessageToAll(_context.GetCurrentPlayer()->GetName() + " has become king of our lands.");
 }

@@ -48,5 +48,9 @@ private:
 
 	//The constructed buildings.
 	std::vector<Building> _building_area;
+
+	//state of player
+	bool _killed_this_round = false;
+	std::shared_ptr<Player> _robbed_by_player_this_round;
 };
 

@@ -32,6 +32,10 @@ public:
 	void ResetCurrentCharacterIndex();
 	const size_t GetAmountOfCharactersInGame() const;
 
+	//setters
+	void SetRobbedCharacter(std::unique_ptr<Character>&& robbed_character);
+	void SetKilledCharacter(std::unique_ptr<Character>&& killed_character);
+
 	//getters
 	const std::vector<std::shared_ptr<Player>>& GetPlayers() const;
 	const Building TakeBuildingCard();
@@ -42,6 +46,11 @@ public:
 	const std::shared_ptr<Player>& GetCurrentPlayer() const;
 	const std::default_random_engine& GetRandomEngine() const;
 	std::unique_ptr<King>& GetKingReference();
+	const std::map<CharacterType, std::shared_ptr<Player>>& GetPlayerRoles() const;
+	const std::vector<Character>& LookAtCharacterDeck();
+
+	const std::unique_ptr<Character>& GetRobbedCharacter() const;
+	const std::unique_ptr<Character>& GetKilledCharacter() const;
 private:
 	IServer& _server;
 	std::vector<shared_ptr<Player>> _players;
@@ -65,5 +74,9 @@ private:
 
 	//the character index that is activated right now
 	size_t _character_index;
+
+	//character states
+	std::unique_ptr<Character> _killed_character;
+	std::unique_ptr<Character> _robbed_character;
 };
 

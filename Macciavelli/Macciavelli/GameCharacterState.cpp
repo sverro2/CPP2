@@ -13,6 +13,35 @@ void GameCharacterState::EnterState()
 	//Show everyone the current character.
 	_server.SendMessageToAll("The active character is: " + Character::CharacterEnumToString(_type));
 
+	//kill player, if killed by murderer
+	const auto& killed_character{ _context.GetKilledCharacter() };
+
+	if (killed_character != nullptr && killed_character->GetCharacterType() == _type) {
+		_server.SendMessage(current_player->GetName(), "Sadly, your character has been killed");
+		_server.SendMessageToAllBut(current_player->GetName(), "The murderer has killed " + killed_character->GetCharacterType());
+		_context.SwitchToNextCharacter();
+		return;
+	}
+
+	//steal from this player, if the player has been robbed
+	const auto& robbed_character{ _context.GetRobbedCharacter() };
+
+	if (robbed_character != nullptr && robbed_character->GetCharacterType() == _type) {
+		//get thief player
+		auto& thief_player{ _context.GetPlayerRoles().at(CharacterType::THIEF) };
+		const auto money_stolen{ current_player->GetMoney() };
+
+		//remove money from current player	
+		current_player->MutateMoney(-money_stolen);
+
+		//add money to the thiefs inventory
+		thief_player->MutateMoney(money_stolen);
+
+		_server.SendMessage(current_player->GetName(), "Sadly, you have been robbed. All your money is gone :-(");
+		_server.SendMessageToAllBut(current_player->GetName(), "The murderer has robbed " + killed_character->GetCharacterType());
+	}
+
+
 	//choose a player you want to take a look at.
 	std::vector<std::string> player_string;
 	
