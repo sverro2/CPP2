@@ -10,8 +10,8 @@ void GameCharacterInitState::EnterState()
 
 	for (int i = 1; i <= 4; i++)
 	{
-		//todo:: take currentPlayer (nullptr needs to be current player).
-		std::shared_ptr<Player> current_player = nullptr;
+		//Get current player.
+		std::shared_ptr<Player> current_player = _context.GetCurrentPlayer();
 
 		//Available characters.
 		auto available_characters = _context.LookAtRemainingCharacterCards();
@@ -27,7 +27,7 @@ void GameCharacterInitState::EnterState()
 
 		int character_index = _server.RequestOptionByIndex(current_player->GetName(), available_character_names, "What character do you choose to be?");
 
-		//Remove character card from deck
+		//Remove character card from deck.
 		_context.TakeCharacterCard(available_characters[character_index]);
 
 		//Assign character to player.
@@ -39,10 +39,14 @@ void GameCharacterInitState::EnterState()
 
 		character_index = _server.RequestOptionByIndex(current_player->GetName(), available_character_names, "What character do you want to get rid of?");
 
-		//Remove character card from deck
+		//Remove character card from deck.
 		_context.TakeCharacterCard(available_characters[character_index]);
 
+		//Set next player.
+		_context.SetCurrentPlayer(_context.GetPlayerAtRightHandOfCurrent());
 	}
+
+	//TODO:: set new state
 }
 
 void GameCharacterInitState::LeaveState()

@@ -42,7 +42,7 @@ private:
 	std::shared_ptr<Player> _current_player;
 
 	//Character
-	const std::vector<Character> _character_deck;
+	std::vector<Character> _character_deck;
 	std::vector<Character> _characters_remaining;
 
 	//Player roles
