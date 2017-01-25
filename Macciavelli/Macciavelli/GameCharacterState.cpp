@@ -20,11 +20,22 @@ void GameCharacterState::EnterState()
 		player_string.push_back(player->GetName());
 	}
 
-	int player_index{ _server.RequestOptionByIndex(current_player->GetName(), player_string, "What player would you like to take a look at?") };
-	const auto player_to_look_at{ _context.GetPlayers().at(player_index) };
-
+	player_string.push_back("Back To Game");
+	
 	//Ask the user to view some items.
-	ShowTableOfPlayer(player_to_look_at);
+	bool back_to_game{ false };
+
+	while (!back_to_game) {
+		int player_index{ _server.RequestOptionByIndex(current_player->GetName(), player_string, "What player would you like to take a look at?") };
+
+		if (player_index < player_string.size() - 1) {
+			const auto player_to_look_at{ _context.GetPlayers().at(player_index) };
+			ShowTableOfPlayer(player_to_look_at);
+		}
+		else {
+			back_to_game = true;
+		}
+	}
 
 	//Add bonus money.
 	current_player->MutateMoney(CalculateBonusIncome());
@@ -41,13 +52,8 @@ void GameCharacterState::EnterState()
 		ShowCurrentPlayerBuildingCards();
 		ShowOptionToConstructBuilding();
 	}
-
-	if (_context.GetAmountOfCharactersInGame() == _context.GetCurrentCharacterIndex() + 1) {
 		
-	}
-	else {
-		_context.SwitchToNextCharacter();
-	}
+	_context.SwitchToNextCharacter();
 }
 
 void GameCharacterState::LeaveState()
