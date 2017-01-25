@@ -244,7 +244,7 @@ void GameCharacterState::ShowOptionToConstructBuilding()
 		//Fetch chosen building index.
 		int building_index = _server.RequestOptionByIndex(player_name, construction_options, "Which building do you want to construct?");
 
-		if (building_index < construction_options.size() - 1) {
+		if (building_index > construction_options.size() - 1) {
 			return;
 		}
 
