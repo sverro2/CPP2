@@ -1,6 +1,9 @@
 #pragma once
+#include <memory>
 #include "GameState.h"
 #include "Character.h"
+#include "Player.h"
+
 class GameCharacterState : public GameState
 {
 public:
@@ -14,11 +17,12 @@ private:
 
 	virtual int CalculateBonusIncome() = 0;
 	virtual void DoCharacterAction() = 0;
-	void ShowBalance();
-	void ShowTotalScore();
-	void ShowCardsInHand();
-	void ShowConstructedBuildings();
-	void ShowTableOfPlayer();
+	void ShowCurrentPlayerBuildingCards();
+	void ShowBalance(const std::shared_ptr<Player> player_to_look_at);
+	void ShowTotalScore(const std::shared_ptr<Player> player_to_look_at);
+	void ShowAmoundOfCardsInHand(const std::shared_ptr<Player> player_to_look_at);
+	void ShowConstructedBuildings(const std::shared_ptr<Player> player_to_look_at);
+	void ShowTableOfPlayer(const std::shared_ptr<Player> player_to_look_at);
 	void ShowChoiceCoinsOrBuildingCards();
 	void ShowOptionToConstructBuilding();
 };

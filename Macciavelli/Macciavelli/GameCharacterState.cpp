@@ -9,16 +9,21 @@ GameCharacterState::GameCharacterState(GameContext & _context, IServer & _server
 void GameCharacterState::EnterState()
 {
 	auto& current_player{ _context.GetCurrentPlayer() };
-	
-	//Show for everyone the current character.
+	//Show everyone the current character.
 	_server.SendMessageToAll("The active character is: " + Character::CharacterEnumToString(_type));
 
-	std::vector<std::string> base_options;
-	base_options.push_back("Show money and spawned buildings of a player?");
-	base_options.push_back("Building cards you hold in you hand?");
+	//choose a player you want to take a look at.
+	std::vector<std::string> player_string;
+	
+	for (const auto& player : _context.GetPlayers()) {
+		player_string.push_back(player->GetName());
+	}
+
+	int player_index{ _server.RequestOptionByIndex(current_player->GetName(), player_string, "What player would you like to take a look at?") };
+	const auto player_to_look_at{ _context.GetPlayers().at(player_index) };
 
 	//Ask the user to view some items.
-	ShowTableOfPlayer();
+	ShowTableOfPlayer(player_to_look_at);
 
 	//Add bonus money.
 	current_player->MutateMoney(CalculateBonusIncome());
@@ -32,6 +37,7 @@ void GameCharacterState::EnterState()
 	//The option to build something.
 	if (_context.GetCurrentPlayer()->LookAtBuildingsInHand().size() > 0)
 	{
+		ShowCurrentPlayerBuildingCards();
 		ShowOptionToConstructBuilding();
 	}
 }
@@ -40,19 +46,7 @@ void GameCharacterState::LeaveState()
 {
 }
 
-void GameCharacterState::ShowBalance()
-{
-	std::string player_name{ _context.GetCurrentPlayer()->GetName() };
-	_server.SendMessage(player_name, "Your balance is: " + std::to_string(_context.GetCurrentPlayer()->GetMoney()) + " coins.");
-}
-
-void GameCharacterState::ShowTotalScore()
-{
-	std::string player_name{ _context.GetCurrentPlayer()->GetName() };
-	_server.SendMessage(player_name, "Your total score is: " + std::to_string(_context.GetCurrentPlayer()->GetScore()));
-}
-
-void GameCharacterState::ShowCardsInHand()
+void GameCharacterState::ShowCurrentPlayerBuildingCards()
 {
 	std::string player_name{ _context.GetCurrentPlayer()->GetName() };
 	_server.SendMessage(player_name, "Your building cards are:");
@@ -70,12 +64,33 @@ void GameCharacterState::ShowCardsInHand()
 	}
 }
 
-void GameCharacterState::ShowConstructedBuildings()
+void GameCharacterState::ShowBalance(const std::shared_ptr<Player> player_to_look_at)
 {
 	std::string player_name{ _context.GetCurrentPlayer()->GetName() };
-	_server.SendMessage(player_name, "Your constructed buildingss are:");
+	_server.SendMessage(player_name, "Your balance is: " + std::to_string(_context.GetCurrentPlayer()->GetMoney()) + " coins.");
+}
 
-	for (const auto& building : _context.GetCurrentPlayer()->LookAtConstructedBuildings()) {
+void GameCharacterState::ShowTotalScore(const std::shared_ptr<Player> player_to_look_at)
+{
+	std::string player_name{ _context.GetCurrentPlayer()->GetName() };
+	std::string player_to_look_at_name{ player_to_look_at->GetName() };
+
+	_server.SendMessage(player_name, player_to_look_at_name + "'s total score is: " + std::to_string(player_to_look_at->GetScore()));
+}
+
+void GameCharacterState::ShowAmoundOfCardsInHand(const std::shared_ptr<Player> player_to_look_at)
+{
+	std::string player_name{ _context.GetCurrentPlayer()->GetName() };
+	_server.SendMessage(player_name, "The Player has " + std::to_string(player_to_look_at->LookAtBuildingsInHand().size()) + " building cards in his hand");
+}
+
+void GameCharacterState::ShowConstructedBuildings(const std::shared_ptr<Player> player_to_look_at)
+{
+	std::string player_name{ _context.GetCurrentPlayer()->GetName() };
+	std::string player_to_look_at_name{ player_to_look_at->GetName() };
+	_server.SendMessage(player_name, player_to_look_at_name + "'s constructed buildings are:");
+
+	for (const auto& building : player_to_look_at->LookAtConstructedBuildings()) {
 		//color
 		std::string color_string{ ColorToString(building.GetColor()) };
 		std::string output{ "Color: " + color_string + "\r\n" };
@@ -88,33 +103,40 @@ void GameCharacterState::ShowConstructedBuildings()
 	}
 }
 
-void GameCharacterState::ShowTableOfPlayer()
+void GameCharacterState::ShowTableOfPlayer(const std::shared_ptr<Player> player_to_look_at)
 {
 	std::string player_name{ _context.GetCurrentPlayer()->GetName() };
 
-	std::vector<std::string> options = { "Balance.", "Constructed buildings", "Building cards", "Total score" };
+	std::vector<std::string> options = { "Balance.", "Constructed buildings", "Ammount Of Cards In Hand", "Total score", "Go Back To Game"};
 
-	int option_index = _server.RequestOptionByIndex(player_name, options, "What do you wish to view?");
+	bool back_to_game{ false };
 
-	switch (option_index)
-	{
-	case 0:
-		//Show the player's balance.
-		ShowBalance();
-		break;
-	case 1:
-		//Show the player's constructed buildings.
-		ShowConstructedBuildings();
-		break;
-	case 2:
-		//Show the player's building cards.
-		ShowCardsInHand();
-		break;
-	default:
-		//Show the player's total score.
-		ShowTotalScore();
-		break;
+	while (!back_to_game) {
+		int option_index = _server.RequestOptionByIndex(player_name, options, "What do you wish to view?");
+
+		switch (option_index)
+		{
+		case 0:
+			//Show the player's balance.
+			ShowBalance(player_to_look_at);
+			break;
+		case 1:
+			//Show the player's constructed buildings.
+			ShowConstructedBuildings(player_to_look_at);
+			break;
+		case 2:
+			//Show the player's building cards.
+			ShowAmoundOfCardsInHand(player_to_look_at);
+			break;
+		case 3:
+			//Show the player's total score.
+			ShowTotalScore(player_to_look_at);
+			break;
+		case 4:
+			back_to_game = true;
+		}
 	}
+	
 }
 
 void GameCharacterState::ShowChoiceCoinsOrBuildingCards()

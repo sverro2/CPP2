@@ -79,7 +79,33 @@
     <ClCompile Include="BuildingArea.cpp">
       <Filter>Models\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameCharacterInitState.cpp" />
+    <ClCompile Include="GameCharacterInitState.cpp">
+      <Filter>Controllers\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameCharacterArchitectState.cpp">
+      <Filter>Controllers\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameCharacterCondottiereState.cpp">
+      <Filter>Controllers\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameCharacterKingState.cpp">
+      <Filter>Controllers\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameCharacterMagicianState.cpp">
+      <Filter>Controllers\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameCharacterMerchantState.cpp">
+      <Filter>Controllers\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameCharacterMurdererState.cpp">
+      <Filter>Controllers\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameCharacterPriestState.cpp">
+      <Filter>Controllers\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameCharacterThiefState.cpp">
+      <Filter>Controllers\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Server.h">
@@ -148,6 +174,32 @@
     <ClInclude Include="BuildingArea.h">
       <Filter>Models\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameCharacterInitState.h" />
+    <ClInclude Include="GameCharacterInitState.h">
+      <Filter>Controllers\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameCharacterArchitectState.h">
+      <Filter>Controllers\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameCharacterCondottiereState.h">
+      <Filter>Controllers\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameCharacterKingState.h">
+      <Filter>Controllers\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameCharacterMagicianState.h">
+      <Filter>Controllers\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameCharacterMerchantState.h">
+      <Filter>Controllers\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameCharacterMurdererState.h">
+      <Filter>Controllers\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameCharacterPriestState.h">
+      <Filter>Controllers\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameCharacterThiefState.h">
+      <Filter>Controllers\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

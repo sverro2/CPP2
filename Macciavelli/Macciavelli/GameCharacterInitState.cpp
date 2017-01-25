@@ -11,6 +11,12 @@ void GameCharacterInitState::EnterState()
 	//current king is current player
 	_context.SetCurrentPlayer(_context.GetKingReference()->GetKing());
 
+	//reset all cards
+	_context.ResetRemainingCharacterCards();
+
+	//reset current character index
+	_context.ResetCurrentCharacterIndex();
+
 	for (int i = 1; i <= 4; i++)
 	{
 		//Get current player.

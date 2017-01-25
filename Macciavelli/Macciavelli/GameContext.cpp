@@ -122,7 +122,7 @@ const bool GameContext::TakeCharacterCard(Character character)
 {
 	auto character_iterator{ std::find(_characters_remaining.begin(), _characters_remaining.end(), character) };
 
-	if (character_iterator != _characters_remaining.end()) {
+	if (character_iterator == _characters_remaining.end()) {
 		return false;
 	}
 	else {
@@ -163,6 +163,21 @@ void GameContext::AddPlayer(const std::shared_ptr<Player>& player)
 void GameContext::SetCharacterDeck(std::vector<Character>&& character_deck)
 {
 	_character_deck = character_deck;
+}
+
+const size_t GameContext::GetCurrentCharacterIndex() const
+{
+	return _character_index;
+}
+
+void GameContext::ResetCurrentCharacterIndex()
+{
+	_character_index = 0;
+}
+
+const size_t GameContext::GetAmountOfCharactersInGame() const
+{
+	return _character_deck.size();
 }
 
 const std::shared_ptr<Player>& GameContext::GetCurrentPlayer() const

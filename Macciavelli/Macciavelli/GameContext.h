@@ -26,6 +26,11 @@ public:
 	void AddPlayer(const std::shared_ptr<Player>& player);
 	void SetCharacterDeck(std::vector<Character>&& character_deck);
 
+	//Make sure the right character gets activated
+	const size_t GetCurrentCharacterIndex() const;
+	void ResetCurrentCharacterIndex();
+	const size_t GetAmountOfCharactersInGame() const;
+
 	//getters
 	const std::vector<std::shared_ptr<Player>>& GetPlayers() const;
 	const Building TakeBuildingCard();
@@ -56,5 +61,8 @@ private:
 	std::unique_ptr<GameState> _current_gamestate;
 	std::unique_ptr<King> _king;
 	std::default_random_engine _random_engine;
+
+	//the character index that is activated right now
+	size_t _character_index;
 };
 
