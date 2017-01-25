@@ -38,7 +38,7 @@ void GameCharacterState::EnterState()
 		thief_player->MutateMoney(money_stolen);
 
 		_server.SendMessage(current_player->GetName(), "Sadly, you have been robbed. All your money is gone :-(");
-		_server.SendMessageToAllBut(current_player->GetName(), "The murderer has robbed " + killed_character->GetCharacterType());
+		_server.SendMessageToAllBut(current_player->GetName(), "The murderer has robbed " + robbed_character->GetCharacterType());
 	}
 
 
@@ -240,11 +240,11 @@ void GameCharacterState::ShowOptionToConstructBuilding()
 
 	construction_options.push_back("Nah... Maybe later");
 
-	for (int x{ 0 }; x < _max_amount_of_buildings_to_build; x++) {
+	for (int x{ 0 }; x < _max_amount_of_buildings_to_build;) {
 		//Fetch chosen building index.
 		int building_index = _server.RequestOptionByIndex(player_name, construction_options, "Which building do you want to construct?");
 
-		if (building_index > construction_options.size() - 1) {
+		if (building_index > construction_options.size() - 2) {
 			return;
 		}
 
@@ -259,6 +259,7 @@ void GameCharacterState::ShowOptionToConstructBuilding()
 			//If building is built.
 			if (_context.GetCurrentPlayer()->ConstructBuilding(buildings[building_index]))
 			{
+				x++;
 				auto building = buildings[building_index];
 				_server.SendMessage(player_name, "You've built: " + building.GetName());
 				_server.SendMessageToAllBut(player_name, "Player: " + player_name + " has constructed: " + building.GetName() = " and it did cost " + std::to_string(building.GetCost()) + " coins.");
