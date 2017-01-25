@@ -24,6 +24,10 @@ void GameCharacterCondottiereState::DoCharacterAction()
 	{
 		_server.SendMessage(current_player->GetName(), "Your opponent does not have any buildings constructed.");
 	}
+	else if (_context.GetPlayerAtRightHandOfCurrent()->HasCharacter(PRIEST))
+	{
+		_server.SendMessage(current_player->GetName(), "Your opponent's Priest protects his buildings.");
+	}
 	else
 	{
 		//Fetch oponent's constructed buildings.

@@ -86,6 +86,22 @@ const bool Player::WasFirstToEightBuildings() const
 	return _first_to_eight_buildings;
 }
 
+const bool Player::HasCharacter(const CharacterType character_type) const
+{
+	bool has_character = false;
+
+	for (int i = 0; i < _characters.size(); i++)
+	{
+		//If has character.
+		if (_characters[i].GetCharacterType() == character_type)
+		{
+			has_character = true;
+		}
+	}
+
+	return has_character;
+}
+
 void Player::AddBuilding(const Building building)
 {
 	_available_buildings.push_back(building);

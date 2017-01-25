@@ -20,6 +20,9 @@ public:
 	const std::vector<Building>& LookAtConstructedBuildings() const;
 	const bool WasFirstToEightBuildings() const;
 
+	//Has Character.
+	const bool HasCharacter(const CharacterType character_type) const;
+
 	//Add Building card to hand.
 	void AddBuilding(const Building building);
 
