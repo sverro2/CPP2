@@ -116,6 +116,7 @@
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="ClientCommand.cpp" />
     <ClCompile Include="EndGame.cpp" />
+    <ClCompile Include="GameCharacterInitState.cpp" />
     <ClCompile Include="GameCharacterState.cpp" />
     <ClCompile Include="GameContext.cpp" />
     <ClCompile Include="GameInitState.cpp" />
@@ -139,6 +140,7 @@
     <ClInclude Include="Client.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="EndGame.h" />
+    <ClInclude Include="GameCharacterInitState.h" />
     <ClInclude Include="GameCharacterState.h" />
     <ClInclude Include="GameContext.h" />
     <ClInclude Include="GameInitState.h" />

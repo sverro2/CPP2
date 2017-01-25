@@ -43,6 +43,29 @@ const CharacterType Character::CharacterStringToEnum(const char * const name_str
 	}
 }
 
+const std::string Character::GetCharacterName() const
+{
+	switch (_type)
+	{
+	case MURDERER:
+		return "Murderer";
+	case THIEF:
+		return "Thief";
+	case MAGICIAN:
+		return "Magician";
+	case KING:
+		return "King";
+	case PRIEST:
+		return "Priest";
+	case MERCHANT:
+		return "Merchant";
+	case ARCHITECT:
+		return "Architect";
+	default:
+		return "Condottiere";
+	}
+}
+
 const size_t Character::GetIndex() const
 {
 	return _index;

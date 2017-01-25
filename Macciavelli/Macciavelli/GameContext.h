@@ -1,4 +1,5 @@
 #pragma once
+#include <map>
 #include <vector>
 #include <memory>
 #include <stack>
@@ -19,6 +20,8 @@ public:
 	void ResetRemainingCharacterCards();
 	void ShuffleBuildingCards(std::vector<Building>&& all_remaining_buildings = std::vector<Building>());
 	void AddCardToGarbagePile(Building building);
+	void AssignCharacterToPlayer(const CharacterType character, const std::shared_ptr<Player> player);
+	void ClearPlayerCharacters();
 	void SetCurrentPlayer(const std::shared_ptr<Player>& player);
 	void AddPlayer(const std::shared_ptr<Player>& player);
 	void SetCharacterDeck(std::vector<Character>&& character_deck);
@@ -38,11 +41,14 @@ private:
 	std::vector<shared_ptr<Player>> _players;
 	std::shared_ptr<Player> _current_player;
 
-	//character
+	//Character
 	std::vector<Character> _character_deck;
 	std::vector<Character> _characters_remaining;
 
-	//buildings
+	//Player roles
+	std::map<CharacterType, std::shared_ptr<Player>> _player_roles;
+
+	//Buildings
 	std::stack<Building> _building_deck;
 	std::stack<Building> _garbage_pile;
 

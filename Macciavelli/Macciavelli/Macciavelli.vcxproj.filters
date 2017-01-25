@@ -73,6 +73,9 @@
     <ClCompile Include="GameScoreState.cpp">
       <Filter>Controllers\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GameCharacterInitState.cpp">
+      <Filter>Controllers\Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="GameCharacterState.cpp">
       <Filter>Controllers\Source Files</Filter>
     </ClCompile>
@@ -139,6 +142,9 @@
       <Filter>Controllers\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameScoreState.h">
+      <Filter>Controllers\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameCharacterInitState.h">
       <Filter>Controllers\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameCharacterState.h">
