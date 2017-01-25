@@ -52,8 +52,5 @@ private:
 
 	//The constructed buildings.
 	std::vector<Building> _building_area;
-
-	//First to eight buildings.
-	bool _first_to_eight_buildings;
 };
 
