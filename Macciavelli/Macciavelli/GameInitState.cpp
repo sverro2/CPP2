@@ -6,6 +6,8 @@
 
 void GameInitState::EnterState()
 {
+	_context.ResetAll();
+
 	_context.ShuffleBuildingCards(std::move(CardReader::ReadBuildings("Data/Bouwkaarten.csv")));
 	std::vector<Character> characters{ std::move(CardReader::ReadCharacters("Data/karakterkaarten.csv")) };
 
