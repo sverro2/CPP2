@@ -11,5 +11,7 @@ public:
 private:
 	virtual int CalculateBonusIncome() = 0;
 	virtual void DoCharacterAction() = 0;
+	void ShowCardsInHand();
+	void ShowTableOfPlayer();
 };
 

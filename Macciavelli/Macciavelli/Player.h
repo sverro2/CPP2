@@ -13,17 +13,18 @@ public:
 	//Getters
 	const std::string& GetName() const;
 	const unsigned short GetAge() const;
-	const std::vector<std::shared_ptr<Character>>& GetCharacters();
+	const std::vector<Character>& GetCharacters();
 	const int GetScore() const;
+	const std::vector<Building>& LookAtBuildingsInHand() const;
 
 	//Add Building card to hand.
-	void AddBuilding(const std::shared_ptr<Building>& building);
+	void AddBuilding(const Building building);
 
 	//Add character card to hand.
-	void AddCharacter(const std::shared_ptr<Character>& character);
+	void AddCharacter(const Character character);
 
 	//Constructs a building from hand, returns bool if constructed.
-	const bool ConstructBuilding(const std::shared_ptr<Building>& building);
+	const bool ConstructBuilding(const Building building);
 
 	//Resets all characters.
 	void ResetCharacters();
@@ -37,12 +38,12 @@ private:
 	unsigned short _money = 2;
 
 	//The playable roles.
-	std::vector<std::shared_ptr<Character>> _characters;
+	std::vector<Character> _characters;
 
 	//The building cards currently in hand.
-	std::vector<std::shared_ptr<Building>> _available_buildings;
+	std::vector<Building> _available_buildings;
 
 	//The constructed buildings.
-	std::vector<std::shared_ptr<Building>> _building_area;
+	std::vector<Building> _building_area;
 };
 

@@ -18,7 +18,7 @@ const unsigned short Player::GetAge() const
 	return _age;
 }
 
-const std::vector<std::shared_ptr<Character>>& Player::GetCharacters()
+const std::vector<Character>& Player::GetCharacters()
 {
 	return _characters;
 }
@@ -32,16 +32,16 @@ const int Player::GetScore() const
 	for (int i = 0; i < _building_area.size(); i++)
 	{
 		//Add building cost to score.
-		score += _building_area[i]->GetCost();
+		score += _building_area[i].GetCost();
 
 		//Color iterator for all building colors which are checked.
-		const auto color_iterator{ std::find(checked_collors.begin(), checked_collors.end(), _building_area[i]->GetColor()) };
+		const auto color_iterator{ std::find(checked_collors.begin(), checked_collors.end(), _building_area[i].GetColor()) };
 
 		//If building color not marked as checked.
 		if (color_iterator == checked_collors.end())
 		{
 			//Mark as checked.
-			checked_collors.push_back(_building_area[i]->GetColor());
+			checked_collors.push_back(_building_area[i].GetColor());
 		}
 	}
 
@@ -65,17 +65,22 @@ const int Player::GetScore() const
 	return score;
 }
 
-void Player::AddBuilding(const std::shared_ptr<Building>& building)
+const std::vector<Building>& Player::LookAtBuildingsInHand() const
+{
+	return _available_buildings;
+}
+
+void Player::AddBuilding(const Building building)
 {
 	_available_buildings.push_back(building);
 }
 
-void Player::AddCharacter(const std::shared_ptr<Character>& character)
+void Player::AddCharacter(const Character character)
 {
 	_characters.push_back(character);
 }
 
-const bool Player::ConstructBuilding(const std::shared_ptr<Building>& building)
+const bool Player::ConstructBuilding(const Building building)
 {
 
 	const auto building_iterator{ std::find(_available_buildings.begin(), _available_buildings.end(), building) };
