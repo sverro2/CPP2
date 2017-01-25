@@ -8,6 +8,9 @@ void GameCharacterInitState::EnterState()
 	//Clear player characters.
 	_context.ClearPlayerCharacters();
 
+	//current king is current player
+	_context.SetCurrentPlayer(_context.GetKingReference()->GetKing());
+
 	for (int i = 1; i <= 4; i++)
 	{
 		//Get current player.

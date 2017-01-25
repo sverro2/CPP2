@@ -3,6 +3,7 @@
 #include "GameContext.h"
 #include "CardReader.h"
 #include "EndGame.h"
+#include "GameCharacterInitState.h"
 
 void GameInitState::EnterState()
 {
@@ -49,6 +50,8 @@ void GameInitState::EnterState()
 
 	//set character deck (right order/available characters)
 	_context.SetCharacterDeck(std::move(characters));
+
+	_context.SwitchToState(std::move(std::make_unique<GameCharacterInitState>(_context, _server)));
 }
 
 void GameInitState::LeaveState()
